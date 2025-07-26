@@ -122,7 +122,7 @@ async function filterOrgFile(inputFile, outputFile) {
 
 // Usage: node filter_github_links.js
 (async () => {
-    const input = path.resolve(path.dirname(__dirname), 'all-organizations.json');
-    const output = path.resolve(__dirname, `orgs_${process.env.YEAR}_filtered.json`);
+    const input = path.resolve(path.dirname(__dirname), `src/unfiltered_orgs/unfiltered-organizations-${process.env.YEAR}.json`);
+    const output = path.resolve(path.dirname(__dirname), `src/filtered_orgs/relevant_links_filtered/orgs_${process.env.YEAR}_filtered.json`);
     await filterOrgFile(input, output);
 })();

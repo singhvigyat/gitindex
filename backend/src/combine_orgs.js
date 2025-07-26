@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import 'dotenv/config';
 
 async function exportAllOrgs() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -64,7 +65,7 @@ async function exportAllOrgs() {
 
   // Convert to array or object; here as array
   const result = Array.from(mergedOrgs.values());
-  const outputPath = path.join(projectRoot, 'all-organizations.json');
+  const outputPath = path.join(projectRoot, 'src', 'unfiltered_orgs', `unfiltered-organizations-${process.env.YEAR}.json`);
 
   try {
     await fs.writeFile(outputPath, JSON.stringify(result, null, 2), 'utf-8');
