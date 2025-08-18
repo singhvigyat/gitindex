@@ -3,14 +3,16 @@ import fs from 'fs/promises';
 import path from 'path';
 import jaroWinkler from 'jaro-winkler';
 import { fileURLToPath } from 'url';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import fetch from 'node-fetch';
-
-
 
 // Define __filename and __dirname manually
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Load .env from the backend root directory (4 levels up from current script)
+const envPath = path.resolve(__dirname, '../../../.env');
+dotenv.config({ path: envPath, debug: true });
 // console.log(__dirname)
 
 // score ->0.85 then links wo github  -> 59
@@ -313,9 +315,10 @@ async function parsefile(inputFile, outputFile) {
 
 // Usage: node filter_github_links.js
 (async () => {
-    console.log(path.dirname(__dirname))
-    const input = path.resolve(__dirname, `orgs_${process.env.YEAR}_filtered.json`);
+    // console.log(path.resolve(__dirname, '..', '..', `filtered_orgs\\relevant_links_filtered\\orgs_${process.env.YEAR}_filtered.json`))
+    // console.info(path.resolve(__dirname, `\\filtered_orgs\\relevant_links_filtered\\orgs_${process.env.YEAR}_filtered.json`))
+    const input = path.resolve(__dirname, '..', '..', `data\\filtered_orgs\\relevant_links_filtered\\orgs_${process.env.YEAR}_filtered.json`);
 
-    const output = path.resolve(__dirname, `orgs_${process.env.YEAR}_github_filtered.json`);
+    const output = path.resolve(__dirname, '..', '..'  ,`data\\filtered_orgs\\github_search_filtered_orgs\\orgs_${process.env.YEAR}_github_search_filtered.json`);
     await parsefile(input, output);
 })();

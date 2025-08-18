@@ -65,7 +65,7 @@ async function exportAllOrgs() {
 
   // Convert to array or object; here as array
   const result = Array.from(mergedOrgs.values());
-  const outputPath = path.join(projectRoot, 'src', 'unfiltered_orgs', `unfiltered-organizations-${process.env.YEAR}.json`);
+  const outputPath = path.join(projectRoot, 'src', 'data/unfiltered_orgs', `unfiltered-orgs-${process.env.YEAR}.json`);
 
   try {
     await fs.writeFile(outputPath, JSON.stringify(result, null, 2), 'utf-8');

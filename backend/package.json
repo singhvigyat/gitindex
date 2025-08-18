@@ -4,9 +4,13 @@
     "type": "module",
     "description": "This is an example of a Crawlee project.",
     "dependencies": {
+        "@mendable/firecrawl-js": "^1.29.3",
+        "axios": "^1.11.0",
         "crawlee": "^3.0.0",
         "dotenv": "^17.2.1",
+        "fetch": "^1.1.0",
         "jaro-winkler": "^0.2.8",
+        "node-fetch": "^3.3.2",
         "playwright": "*"
     },
     "scripts": {
