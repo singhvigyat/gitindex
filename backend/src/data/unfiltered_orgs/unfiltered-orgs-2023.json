@@ -44633,6 +44633,42 @@
     "lastUpdated": "2025-09-10T20:08:25.539Z"
   },
   {
+    "orgName": "Mixxx",
+    "year": "2023",
+    "logoUrl": "https://summerofcode.withgoogle.com/media/org/mixxx/ivlj1kl8jabpmfs9-360.png",
+    "url": "https://summerofcode.withgoogle.com/archive/2023/organizations/mixxx",
+    "techContent": [
+      "javascript",
+      "c++",
+      "qt",
+      "pytorch",
+      "onnx"
+    ],
+    "topicContent": [
+      "music",
+      "dj",
+      "streaming"
+    ],
+    "websiteLink": "https://mixxx.org",
+    "contactInfo": [
+      {
+        "href": "https://mixxx.zulipchat.com/",
+        "text": "Chat"
+      },
+      {
+        "href": "https://mixxx.org/news/",
+        "text": "Blog"
+      }
+    ],
+    "projectsData": [
+      {}
+    ],
+    "projectLinks": [],
+    "githubLinksFromWebsite": [],
+    "githubLinksFromProjects": [],
+    "lastUpdated": "2025-09-10T20:22:28.801Z"
+  },
+  {
     "orgName": "Oppia Foundation",
     "year": "2023",
     "logoUrl": "https://summerofcode.withgoogle.com/media/org/oppia-foundation/nqvgy9fm3aqshwtv-360.png",
@@ -44807,6 +44843,80 @@
       "https://github.com/oppia/oppia/pull/19122",
       "https://github.com/oppia/oppia/pull/18831"
     ],
+    "lastUpdated": "2025-09-10T20:22:28.801Z"
+  },
+  {
+    "orgName": "libvirt",
+    "year": "2023",
+    "logoUrl": "https://summerofcode.withgoogle.com/media/org/libvirt/8xb4f5zwejage5pf-360.png",
+    "url": "https://summerofcode.withgoogle.com/archive/2023/organizations/libvirt",
+    "techContent": [
+      "kvm",
+      "hypervisor",
+      "qemu",
+      "lxc"
+    ],
+    "topicContent": [
+      "virtualization",
+      "library"
+    ],
+    "websiteLink": "https://libvirt.org/",
+    "contactInfo": [
+      {
+        "href": "https://libvirt.org/contact.html#email",
+        "text": "Mailing list / Forum"
+      },
+      {
+        "href": "https://libvirt.org/contact.html#irc",
+        "text": "Chat"
+      }
+    ],
+    "projectsData": [
+      {}
+    ],
+    "projectLinks": [],
+    "githubLinksFromWebsite": [],
+    "githubLinksFromProjects": [],
+    "lastUpdated": "2025-09-10T20:22:28.801Z"
+  },
+  {
+    "orgName": "strace",
+    "year": "2023",
+    "logoUrl": "https://summerofcode.withgoogle.com/media/org/strace/yreopwofddfe6zhk-360.png",
+    "url": "https://summerofcode.withgoogle.com/archive/2023/organizations/strace",
+    "techContent": [
+      "c",
+      "shell",
+      "make",
+      "autotools",
+      "gawk"
+    ],
+    "topicContent": [
+      "debugging",
+      "tracing",
+      "diagnostic"
+    ],
+    "websiteLink": "https://strace.io/",
+    "contactInfo": [
+      {
+        "href": "https://lists.strace.io/mailman/listinfo/strace-devel",
+        "text": "Mailing list / Forum"
+      },
+      {
+        "href": "ircs://irc.oftc.net:6697/strace",
+        "text": "Chat"
+      },
+      {
+        "href": "mailto:strace-devel@lists.strace.io",
+        "text": "Email"
+      }
+    ],
+    "projectsData": [
+      {}
+    ],
+    "projectLinks": [],
+    "githubLinksFromWebsite": [],
+    "githubLinksFromProjects": [],
     "lastUpdated": "2025-09-10T20:22:28.801Z"
   }
 ]
