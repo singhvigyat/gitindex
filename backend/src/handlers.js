@@ -6,6 +6,7 @@ import {
     KeyValueStore,
 } from 'crawlee';
 import crypto from 'crypto';
+import { text } from 'stream/consumers';
 
 export const router = createPlaywrightRouter();
 
@@ -13,16 +14,53 @@ function makeKeyFromOrgName(orgName) {
     return crypto
         .createHash('sha256')
         .update(orgName)
-        .digest('hex'); 
+        .digest('hex');
 }
 
+// get links from the org page on gsoc orgs. 
 router.addHandler('ORG', async ({ page, request, log, enqueueLinks }) => {
     // --- ORG handler: initialize one KVS entry per org (using hashKey) ---
+    const { orgData, imageData, allOrgData, allImgData } = request.userData || {};
+    // console.log("✅✅✅✅ here in org handler");
+    // console.log("Current org:", orgData);
+    // console.log("Matching image:", imageData);
+
     await page.waitForSelector('.org-info-wrapper');
 
     // Extract fields as before
     const techContent = await page.locator('.tech__content').textContent();
     const topicContent = await page.locator('.topics__content').textContent();
+    const contactSelector = 'app-org-info-contact-card li'
+    await page.waitForSelector(contactSelector).catch(() => { })
+
+    const info = await page.locator(contactSelector).all()
+
+    let contactInfo = []
+    for (const li of info) {
+        const a = li.locator('a').first();
+        if (await a.count()) {
+            const href = await a.getAttribute('href');
+
+            // Option A: only direct text nodes (skips <mat-icon> "email")
+            const label = await a.evaluate(el =>
+                Array.from(el.childNodes)
+                    .filter(n => n.nodeType === Node.TEXT_NODE)
+                    .map(n => n.textContent.trim())
+                    .filter(Boolean)
+                    .join(' ')
+            );
+
+            // Option B (fallback): visible text, may include icon text in some cases
+            // const label = (await a.innerText()).trim();
+
+            contactInfo.push({ href, text: label });
+        } else {
+            let text = (await li.textContent())?.trim() ?? '';
+        }
+    }
+
+
+
     const orgName = await page
         .locator('.constrainer--line-length h2 span')
         .textContent();
@@ -30,7 +68,53 @@ router.addHandler('ORG', async ({ page, request, log, enqueueLinks }) => {
         .locator('.link__wrapper a')
         .getAttribute('href');
 
-    // Find all “View Code” (project) links
+    const projectsData = await page.evaluate(() => {
+        const projects = [];
+
+        // Find all project containers (each .content div represents a project)
+        const projectContainers = document.querySelectorAll('div.content:has(.contributor)');
+
+        if (projectContainers.length === 0) {
+            // Method 2: Fallback - select all .content divs and filter manually
+            projectContainers = Array.from(document.querySelectorAll('div.content')).filter(container => {
+                return container.querySelector('.contributor') !== null;
+            });
+        }
+
+
+        projectContainers.forEach((container, index) => {
+            const project = {
+                // Extract contributor information
+                contributor: container.querySelector('.contributor__content')?.textContent?.trim() || '',
+
+                // Extract mentor information
+                mentor: container.querySelector('.mentor__content')?.textContent?.trim() || '',
+
+                // Extract organization (note: uses .mentor__content class in your HTML)
+                organization: container.querySelector('.organization .mentor__content')?.textContent?.trim() || '',
+
+                // Extract project title
+                title: container.querySelector('.title')?.textContent?.trim() || '',
+
+                // Extract project description
+                description: container.querySelector('.description')?.textContent?.trim() || '',
+
+                // Extract project details link
+                projectDetailsLink: container.querySelector('a[href*="/archive/"][href*="/projects/"]')?.href || '',
+
+                // Extract "View code" link
+                codeLink: container.querySelector('a[href]:not([href*="/archive/"])')?.href || '',
+
+                // Additional metadata
+                index: index
+            };
+
+            projects.push(project);
+        });
+
+        return projects;
+    });
+
     const foundLink = await page.$$eval('a.mdc-button--outlined', (links) =>
         links
             .filter((link) => {
@@ -44,25 +128,35 @@ router.addHandler('ORG', async ({ page, request, log, enqueueLinks }) => {
     );
     const projectLinks = foundLink || [];
 
+    let techTags = techContent
+    techTags = techTags.split(",").map(e => e.trim())
+
+    let topicTags = topicContent
+    topicTags = topicTags.split(",").map(e => e.trim())
+
     // Build the value we want to store (including the original orgName)
+    console.log("YEAR", process.env.YEAR)
     const baseData = {
-        orgName,       // store the real name inside the data
+        orgName,
+        year: process.env.YEAR,
+        logoUrl: imageData.src,
         url: request.url,
-        techContent: techContent?.trim() || '',
-        topicContent: topicContent?.trim() || '',
+        techContent: techTags || [],
+        topicContent: topicTags || [],
         websiteLink: websiteLink || '',
-        projectLinks,                   
+        contactInfo,
+        projectsData,
+        projectLinks: projectLinks,
         githubLinksFromWebsite: [],
         githubLinksFromProjects: [],
         lastUpdated: new Date().toISOString(),
     };
-
     // Compute a “safe” key
     const key = makeKeyFromOrgName(orgName);
     const store = await KeyValueStore.open('org-data');
     await store.setValue(key, baseData);
 
-    // Enqueue the website (if exists), passing only key
+    // Enqueue the website (if exists), passing only k  ey
     if (websiteLink) {
         log.info(`Enqueuing websiteLink for ORGLINK (key=${key}): ${websiteLink}`);
         await enqueueLinks({
@@ -76,6 +170,7 @@ router.addHandler('ORG', async ({ page, request, log, enqueueLinks }) => {
     }
 });
 
+// get links from website.
 router.addHandler('ORGLINK', async ({ request, page, log, enqueueLinks }) => {
     // --- ORGLINK handler: merge website-level GitHub links ---
     const { key } = request.userData; // this is the hex-hash key
@@ -121,6 +216,7 @@ router.addHandler('ORGLINK', async ({ request, page, log, enqueueLinks }) => {
     }
 });
 
+// get github links from the projects given on the gsoc organizations page. 
 router.addHandler('PROJECTS', async ({ request, page, log }) => {
     // --- PROJECTS handler: merge project-page GitHub links ---
     const { key } = request.userData;
@@ -155,6 +251,7 @@ router.addHandler('PROJECTS', async ({ request, page, log }) => {
     });
 });
 
+// get all the organizations first. 
 router.addDefaultHandler(async ({ request, page, enqueueLinks, log }) => {
     log.debug(`Processing listing page: ${request.url}`);
     console.log("Starting listing page handler");
@@ -167,20 +264,54 @@ router.addDefaultHandler(async ({ request, page, enqueueLinks, log }) => {
 
         // Wait for organization links to load
         await page.waitForSelector('.org-wrapper a', { timeout: 10000 });
+        await page.waitForSelector('.img-wrapper img', { timeout: 10000 })
 
-        // Get all organization links on current page
-        const orgLinks = await page.$$eval('.org-wrapper a', (links) => {
-            return links.map(link => link.href);
-        });
 
-        console.log(`Found ${orgLinks.length} organization links on page ${pageNumber}`);
+        const orgData = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('.org-wrapper a')).map((link, index) => ({
+                url: link.href,
+                dataId: link.getAttribute('data-id') || '',
+                index: index,
+            }));
+        })
 
-        // Enqueue all organization links from current page
-        await enqueueLinks({
-            urls: orgLinks,
-            label: 'ORG',
-        });
+        const imgData = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('.img-wrapper img')).map((img, index) => ({
+                src: img.src,
+                index: index
+            }));
+        })
 
+        const matchedData = orgData.map(org => {
+            const matchingImage = imgData.find(img =>
+                img.index === org.index || img.dataId === org.dataId
+            )
+
+            return {
+                ...org,
+                imageData: matchingImage
+            }
+        })
+
+
+        // await Dataset.pushData( matchedData)
+
+        // Extract URLs from orgData first
+        for (let i = 0; i < orgData.length; i++) {
+            const org = orgData[i];
+            const matchingImage = imgData.find(img => img.index === org.index)
+            await enqueueLinks({
+                urls: [org.url],
+                label: 'ORG',
+                userData: {
+                    orgData: org,
+                    imageData: matchingImage,
+                    allOrgData: orgData,
+                    allImgData: imgData
+                }
+
+            })
+        }
         // Now handle pagination - look for next button on the listing page
         const nextButtonSelector = 'button.mat-mdc-paginator-navigation-next';
         const nextButton = await page.$(nextButtonSelector);
