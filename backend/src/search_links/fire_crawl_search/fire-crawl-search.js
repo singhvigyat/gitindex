@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs/promises'
 
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 console.log(path.resolve(__dirname + '..\\..\\..\\..\\.env'))
@@ -16,28 +17,36 @@ function truncateURL(url) {
     return url.split("/").slice(0, 4).join("/") + "/"
 }
 
-async function fireCrawlSearch(query, apiKey) {
-    try {
-        let links = []
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}
 
-        const result = await app.search(`${query}`, { limit: 1 })
-            .then(searchResult => {
-                // Process the search results
-                searchResult.data.forEach(result => {
-                    links.push(result.url),
-                        console.log(`🔍Title: ${result.title}`);
-                    console.log(`🔗URL: ${result.url}`);
-                    console.log(`Description: ${result.description}`);
+async function fireCrawlSearch(query) {
+    while (true) {
+        try {
+            let links = []
+
+            const result = await app.search(`${query}`, { limit: 1 })
+                .then(searchResult => {
+                    // Process the search results
+                    searchResult.data.forEach(result => {
+                        links.push(result.url),
+                            console.log(`🔍Title: ${result.title}`);
+                        console.log(`🔗URL: ${result.url}`);
+                        console.log(`Description: ${result.description}`);
+                    });
                 });
-            });
-        console.log("link recieved is this -> ", links)
-        console.log(Array.isArray(links));
+            console.log("link recieved is this -> ", links)
+            console.log(Array.isArray(links));
 
-        return links;
+            return links;
 
-    } catch (error) {
-        console.error('Search failed:', error.message);
-        return null;
+        } catch (error) {
+            console.error('Search failed, waiting 1 minute before retry', error.message);
+            await sleep(60000);
+            continue;
+            // return null;
+        }
     }
 }
 
