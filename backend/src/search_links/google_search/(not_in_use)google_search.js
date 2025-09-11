@@ -50,7 +50,6 @@ async function parsefile(inputFile, outputFile) {
         // const rawName = org.orgName
 
         if (org.githubLink == null) {
-
             const orgName = org.orgName
             const query = `site:github.com ${orgName}`;
             // const query = `${orgName} github`;
