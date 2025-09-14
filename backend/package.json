@@ -16,12 +16,17 @@
     "scripts": {
         "dev": "node src/main.js",
         "ts": "npx tsc -b && node dist/main.js",
-        "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+
+        "build": "npm run clean && tsc -b && npm run copy-assets",
+        "clean": "rimraf dist",
+        "copy-assets": "copyfiles -u 1 \"src/data/**/*.*\" dist"
     },
     "author": "It's not you it's me",
     "license": "ISC",
     "devDependencies": {
         "@types/node": "^24.3.1",
+        "copyfiles": "^2.4.1",
+        "rimraf": "^6.0.1",
         "typescript": "^5.9.2"
     }
 }

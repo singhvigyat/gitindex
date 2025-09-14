@@ -8,6 +8,7 @@ import { cacheValidator, logCacheSession } from './caching/betterCacheValidator.
 async function exportAllOrgs() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const projectRoot = path.resolve(__dirname, '..');
+  
   const kvsDir = path.join(projectRoot, 'storage', 'key_value_stores', 'org-data');
 
   console.log('🔍 Reading files from:', kvsDir);
@@ -84,7 +85,7 @@ async function exportAllOrgs() {
 
   // Convert to array or object; here as array
   const result = Array.from(mergedOrgs.values());
-  const outputPath = path.join(projectRoot, 'src', 'data/unfiltered_orgs', `unfiltered-orgs-${process.env.YEAR}.json`);
+  const outputPath = path.join(projectRoot, 'data/unfiltered_orgs', `unfiltered-orgs-${process.env.YEAR}.json`);
 
   try {
     await fs.writeFile(outputPath, JSON.stringify(result, null, 2), 'utf-8');

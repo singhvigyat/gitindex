@@ -33,7 +33,7 @@ async function buildCache(): Promise<Map<string, OrgData>> {
     const cache = new Map<string, OrgData>();
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const projectRoot = path.resolve(__dirname, '..', '..')
-    const finalOrgs = path.join(projectRoot, 'src', 'data', 'final_orgs')
+    const finalOrgs = path.join(projectRoot, 'data', 'final_orgs')
 
     console.log(`Building Github Link cache...`);
     console.log(`Scanning: ${finalOrgs}`)

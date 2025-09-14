@@ -62,11 +62,7 @@ async function filterOrgFile(inputFile, outputFile) {
         const filteredProjectPageLinks = filterLinks(org.githubLinksFromProjects);
 
 
-        // out[key] = {
-        //     ...org,
 
-        //     lastUpdated: new Date().toISOString(),
-        // };
 
 
         const allLinks = [
@@ -92,23 +88,34 @@ async function filterOrgFile(inputFile, outputFile) {
             }
         }
 
-        // Assign the selected githubLink if it meets threshold
-        let githubLink = null;
-        if (best.url && best.score >= threshold) {
-            githubLink = best.url;
-            withLink++;
-        } else {
-            withoutLink++;
-        }
+        console.log(org.githubLink);
 
-        out[key] = {
-            ...org,
-            githubLink,
-            projectLinks: filteredProjectLinks,
-            githubLinksFromWebsite: filteredWebsiteLinks,
-            githubLinksFromProjects: filteredProjectPageLinks,
-            lastUpdated: new Date().toISOString(),
-        };
+        // Assign the selected githubLink if it meets threshold
+
+        if (org.githubLink == null) {
+            let githubLink = null;
+            if (best.url && best.score >= threshold) {
+                githubLink = best.url;
+                withLink++;
+            } else {
+                withoutLink++;
+            }
+
+            out[key] = {
+                ...org,
+                githubLink,
+                projectLinks: filteredProjectLinks,
+                githubLinksFromWebsite: filteredWebsiteLinks,
+                githubLinksFromProjects: filteredProjectPageLinks,
+                lastUpdated: new Date().toISOString(),
+            };
+        } else {
+            out[key] = {
+                ...org,
+                lastUpdated: new Date().toISOString(),
+            };
+            withLink++;
+        }
 
     }
 
@@ -122,7 +129,8 @@ async function filterOrgFile(inputFile, outputFile) {
 
 // Usage: node filter_github_links.js
 (async () => {
-    const input = path.resolve(path.dirname(__dirname), `src/data/unfiltered_orgs/unfiltered-orgs-${process.env.YEAR}.json`);
-    const output = path.resolve(path.dirname(__dirname), `src/data/filtered_orgs/relevant_links_filtered/orgs_${process.env.YEAR}_filtered.json`);
+    const projectRoot = path.dirname(__dirname, '..')
+    const input = path.resolve(projectRoot, `data\\unfiltered_orgs\\unfiltered-orgs-${process.env.YEAR}.json`);
+    const output = path.resolve(projectRoot, `data\\filtered_orgs\\relevant_links_filtered\\orgs_${process.env.YEAR}_filtered.json`);
     await filterOrgFile(input, output);
 })();

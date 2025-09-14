@@ -106,9 +106,9 @@ async function main() {
 
 
     console.log(path.dirname(__dirname))
-    const input = path.resolve(__dirname, '..', '..', `data\\filtered_orgs\\github_search_filtered_orgs\\orgs_${process.env.YEAR}_github_search_filtered.json`);
+    const input = path.resolve(__dirname, '..', '..', '..', `data\\filtered_orgs\\github_search_filtered_orgs\\orgs_${process.env.YEAR}_github_search_filtered.json`);
 
-    const output = path.resolve(__dirname, '..', '..', `data\\filtered_orgs\\google_filtered_orgs\\orgs_${process.env.YEAR}_google_filtered.json`);
+    const output = path.resolve(__dirname, '..', '..', '..', `data\\filtered_orgs\\google_filtered_orgs\\orgs_${process.env.YEAR}_google_filtered.json`);
 
     await parsefile(input, output);
 
