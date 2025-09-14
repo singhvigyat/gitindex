@@ -2,7 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import 'dotenv/config';
-import { cacheValidator } from './caching/basicCacheValidator.js';
+// import { cacheValidator } from './caching/basicCacheValidator.js';
+import { cacheValidator, logCacheSession } from './caching/betterCacheValidator.js';
 
 async function exportAllOrgs() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,7 +23,7 @@ async function exportAllOrgs() {
 
   // Map to accumulate merged org data by orgName
   const mergedOrgs = new Map();
-  let cachedOrgsCnt=0;
+  let cachedOrgsCnt = 0;
 
   for (const fileName of files.filter(f => f.endsWith('.json'))) {
     const filePath = path.join(kvsDir, fileName);
@@ -70,27 +71,27 @@ async function exportAllOrgs() {
       }
     }
 
-    console.log(`✅ Merged into ${mergedOrgs.size} unique organizations`);
-    console.log(`Cached ${cachedOrgsCnt} Organizations`)
+  }
+  console.log(`✅ Merged into ${mergedOrgs.size} unique organizations`);
+  console.log(`Cached ${cachedOrgsCnt} Organizations`)
 
-    // Convert to array or object; here as array
-    const result = Array.from(mergedOrgs.values());
-    const outputPath = path.join(projectRoot, 'src', 'data/unfiltered_orgs', `unfiltered-orgs-${process.env.YEAR}.json`);
+  // Convert to array or object; here as array
+  const result = Array.from(mergedOrgs.values());
+  const outputPath = path.join(projectRoot, 'src', 'data/unfiltered_orgs', `unfiltered-orgs-${process.env.YEAR}.json`);
 
-    try {
-      await fs.writeFile(outputPath, JSON.stringify(result, null, 2), 'utf-8');
-      console.log(`🎉 Exported merged data to ${outputPath}`);
-    } catch (err) {
-      console.error(`Failed to write ${outputPath}: ${err.message}`);
-      process.exit(1);
-    }
+  try {
+    await fs.writeFile(outputPath, JSON.stringify(result, null, 2), 'utf-8');
+    console.log(`🎉 Exported merged data to ${outputPath}`);
+  } catch (err) {
+    console.error(`Failed to write ${outputPath}: ${err.message}`);
+    process.exit(1);
   }
 
-
-
-
+  console.log("Printing Log Stats: ");
+  logCacheSession();
 
 }
+
 exportAllOrgs().catch(err => {
   console.error(err);
   process.exit(1);
