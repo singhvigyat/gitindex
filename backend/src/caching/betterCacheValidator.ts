@@ -91,7 +91,7 @@ async function buildCache(): Promise<Map<string, OrgData>> {
 
 }
 
-export async function cacheValidator(orgName: string): Promise<OrgData | null> {
+export async function cacheValidator(orgName: string): Promise<string | null> {
     if (!orgCache) {
         orgCache = await buildCache()
     }
@@ -104,9 +104,12 @@ export async function cacheValidator(orgName: string): Promise<OrgData | null> {
     if (found) {
         cacheStats.hits++;
     }
-
-    return found || null;
-
+    // console.log("this is what is found", found)
+    // console.log(found!.githubLink)
+    // console.log(found!['githubLink'])
+    if (found)
+        return found!.githubLink || null;
+    else return null;
 }
 
 

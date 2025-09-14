@@ -40,13 +40,20 @@ async function exportAllOrgs() {
     }
     const name = data.orgName.trim();
     const cachedOrg = await cacheValidator(name);
+    // console.log("this is cached Org ", cachedOrg)
+    // console.log(cachedOrg)
 
     // If first time, store entire object
     if (!mergedOrgs.has(name)) {
       if (cachedOrg != null) {
+        data.githubLink = cachedOrg;
+        // const githubLink = cachedOrg;
+        // cachedOrg['year'] = process.env.YEAR;
+        // console.log(process.env.YEAR)
         mergedOrgs.set(name, { ...data });
         // console.log(cachedOrg)
-        console.log(`Adding cached Org....🔍🔍🔗🔗`)
+        // console.log(`Adding cached Org....🔍🔍🔗🔗`)
+        console.log(`Added cached Org.....${name}`)
         cachedOrgsCnt++;
       } else if (cachedOrg == null) {
         mergedOrgs.set(name, { ...data });
