@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@font-face{
+    font-family: 'Satoshi-Black';
+    src:url('/fonts/Satoshi-Black.otf'); 
+    font-display: swap;
+}
+
+@font-face{
+    font-family: 'Satoshi-Bold';
+    src:url('/fonts/Satoshi-Bold.otf'); 
+    font-display: swap;
+}
+
+@theme {
+  --font-satoshi-black: "Satoshi-Black", system-ui, sans-serif;
+  --font-satoshi-bold: "Satoshi-Bold", system-ui, sans-serif;
+}
