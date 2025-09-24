@@ -1,5 +1,4 @@
 import { Arrow } from "../assets/icons/arrowIcon"
-import { Arrow2 } from "../assets/icons/arrowIcon2"
 import { BottomLeft } from "../assets/icons/bottomLeftIcon"
 import { BottomRight } from "../assets/icons/bottomRightIcon.tsx"
 import { Github } from "../assets/icons/githubIcon"
@@ -8,7 +7,7 @@ import { Link } from "../assets/icons/linkIcon"
 import { Report } from "../assets/icons/reportIcon"
 import { TopRight } from "../assets/icons/topRightIcon"
 import { User } from "../assets/icons/userIcon"
-import { Tag } from "./tagComponent"
+import { TagChip } from "./tagChip.tsx"
 interface cardProps {
     orgName: string,
     tagline: string,
@@ -25,7 +24,7 @@ export const Card = ({ orgName, tagline, tags }: cardProps) => {
                 </span>
             </span>
             <div>
-                <LeftTopCorner /> 
+                <LeftTopCorner />
             </div>
             <div className="w-[30%] flex justify-center items-center m-1 bg-amber-200">
                 logo
@@ -39,36 +38,38 @@ export const Card = ({ orgName, tagline, tags }: cardProps) => {
                         {tagline}
                     </div>
                     {/* tags */}
-                    <div className="flex">
-                        <span className="flex gap-[5px] w-[90%] text-ellipsis whitespace-nowrap overflow-hidden text-[#414148] bg-red-200 items-center">
+                    <div className="flex ">
+                        <span className="flex gap-[5px] w-[90%] py-1 whitespace-nowrap overflow- text-[#414148] items-center">
                             {
-                                tags.map((ele: any) => {
-                                    return <Tag title={ele} />
-                                })
+                                // tags.map((ex le: any) => {
+                                //     return <Tag title={ele} />
+                                // })
+                                // < AutoChipGroup tags={tags}/>
+                                <TagChip tags={tags} />
                             }
                         </span>
-                    </div>
+                    </div> 
                     <div className="cursor-pointer flex text-[12px] gap-2 font-satoshi-regular text-[#414148] ">
-                        <div className="pt-4  flex items-center gap-1 hover:text-black ">
+                        <div className="pt-3 flex items-center gap-1 hover:text-black ">
                             <Github />
                             Github
                         </div>
-                        <div className="pt-4 flex items-center justify-center hover:text-black">
+                        <div className="pt-3 flex items-center justify-center hover:text-black">
                             <Link />
                             <span className="pl-1">
                                 Website
                             </span>
                         </div>
-                        <div className="pt-4 flex items-center justify-center hover:text-black">
+                        <div className="pt-3 flex items-center justify-center hover:text-black">
                             <Report />
                             <span className="pl-1">
                                 Report
                             </span>
                         </div>
-                        <div className="pt-4 flex items-center justify-center hover:text-black">
+                        <div className="pt-3 flex items-center justify-center hover:text-black">
                             <User />
                             <span className="pl-1">
-                                Contact Info
+                                Contact
                             </span>
                         </div>
                     </div>
@@ -77,7 +78,7 @@ export const Card = ({ orgName, tagline, tags }: cardProps) => {
 
             </div>
 
-            <span className=" flex items-center text-[#414148] hover:text-black ">
+            <span className="pr-2 flex items-center text-[#414148] hover:text-black ">
                 <Arrow />
             </span>
             {/* <span className="relative">
