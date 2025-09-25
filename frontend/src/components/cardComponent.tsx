@@ -31,10 +31,10 @@
                 </div>
                 <div className="pl-5 pt-1 w-[65%]  ">
                     <div className="">
-                        <div className="text-ellipsis whitespace-nowrap overflow-hidden font-satoshi-bold pt-1">
+                        <div className="text-ellipsis whitespace-nowrap overflow-hidden font-satoshi-bold pt-1 pb-1">
                             {orgName}
                         </div>
-                        <div className="h-[25%] w-[80%] text-ellipsis whitespace-nowrap overflow-hidden font-satoshi-regular text-[#414148] pt-1 pb-1">
+                        <div className="h-[25%] w-[80%] text-ellipsis whitespace-nowrap overflow-hidden font-satoshi-regular text-[#414148] pt-1 pb-1 text-sm ">
                             {tagline}
                         </div>
                         {/* tags */}

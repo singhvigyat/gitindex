@@ -1,8 +1,7 @@
 
 import './App.css'
-import { Card } from './components/cardComponent'
 import { Dashboard } from './components/dashboard'
-import { PopoverDemo } from './components/popOver'
+// import { PopoverDemo } from './components/popOver'
 
 function App() {
 

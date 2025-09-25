@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Tag } from "./tagComponent"
 import { OverflowList } from "react-overflow-list";
-import { PopoverDemo } from "./popOver";
+import {  PopoverTags } from "./popOver";
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover";
-
-// import * as Popover from "@radix-ui/react-popover";
 
 interface TagChipProps {
     tags: string[]
@@ -29,7 +27,7 @@ export const TagChip: React.FC<TagChipProps> = ({ tags }) => {
                 </PopoverTrigger>
                 {/* <Popover.Portal> */}
                 <PopoverContent className="z-50 bg-white shadow-lg  w-[60%] border-[#DDDDED]  border-1">
-                    <PopoverDemo tags={overflowItems} />
+                    <PopoverTags tags={overflowItems} />
                 </PopoverContent>
                 {/* </Popover.Portal> */}
             </Popover>
@@ -46,7 +44,6 @@ export const TagChip: React.FC<TagChipProps> = ({ tags }) => {
                 itemRenderer={ItemRenderer}
                 overflowRenderer={OverflowRenderer}
             />
-            {/* {showPopOver && <PopoverDemo tags={overflowItems} />} */}
         </div>
     )
 }
