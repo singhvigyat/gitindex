@@ -1,22 +1,45 @@
 
+import { useEffect, useState } from 'react';
 import './App.css'
-import { Dashboard } from './components/dashboard'
-// import { PopoverDemo } from './components/popOver'
+// import { Dashboard } from './components/dashboard'
+import axios from 'axios';
+import { Dashboard } from './components/dashboard';
 
 function App() {
+  const [orgs, setOrgs] = useState<object>({});
+
+  async function getOrgs(year: any) {
+    const orgs = await axios.get(`${import.meta.env.VITE_URL}/api/org/getOrgs?year=${year}`)
+    console.log("orgs are -> ", orgs.data)
+    return orgs;
+  }
+
+  useEffect(() => {
+    async function get() {
+      await getOrgs(2024).then((result) => {
+        console.log(result.data)
+        setOrgs(result.data)
+      });
+    }
+
+    get();
+  }, [])
 
   return (
+
     <>
       <div className='flex gap-4 '>
-{/* 
-        <Card orgName="First ORg the the the the the the  of the year" tagline='hello this is out first tagline so you dont know' tags={["hello", "first", "dfd", "sdfdsf", "sdfd", "dfdfsdfdfsdfsdfdsf", "dfd", "sdfsdfsdfdfsdf", "dsfsdfsdf sdf sd f sd f dsf sd f d", "sdfdfdsf ", " sdfsdfsdf ", "sdfdsf"
-        ]} />
-        <Card orgName='Second ORg of the year' tagline='this is the new stuff enjoynenssdfk' tags={["advanced data structures", "first", "no", "c++", "his is hti new first", "thle"]} /> */}
+        
+        <Dashboard orgs={orgs}/>
+        {/* {
+          Object.entries(orgs).map(([_, value]: any) => {
+            return Object.entries(value).map(([k, v]: any) => {
+              return <div key={k} >{JSON.stringify(v.orgName)}</div>
+            })
+          
+          })
+        } */}
 
-
-<Dashboard/>
-
-    
       </div>
     </>
   )
