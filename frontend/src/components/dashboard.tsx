@@ -9,7 +9,7 @@ export const Dashboard = ({ orgs }: any) => {
     return (
         <div>
             {/* navbar */}
-            <nav className="font-satoshi-black w-screen fixed top-0 h-16 z-10 border-b-1 flex items-center px-16 tracking-tighter">
+            <nav className="font-satoshi-black   w-screen fixed top-0 h-16 z-10 border-b-1 flex items-center px-16 tracking-tighter">
                 nameoftheproject
             </nav>
 
@@ -35,7 +35,7 @@ export const Dashboard = ({ orgs }: any) => {
 
                         Object.entries(orgs).map(([_, e]: any) => {
                             return Object.entries(e).map(([keys, value]: any) => {
-                                return <Card orgName={value.orgName} tagline={"ehllo this is the tagline"} tags={value.techContent} />
+                                return <Card logoUrl={value.logoUrl} orgName={value.orgName} tagline={value.tagLine} tags={value.techContent} />
                                 return <div key={keys}>{JSON.stringify(value.orgName)}</div>
                             })
                         })
