@@ -1,6 +1,10 @@
-import { Key } from "lucide-react"
+import { Key, Plus, PlusIcon } from "lucide-react"
 import { Card } from "./cardComponent"
 import { AccordionSideBar } from "./sideBarAccordion"
+import { BottomLeft } from "@/assets/icons/bottomLeftIcon"
+import { TopRight } from "@/assets/icons/topRightIcon"
+import { LeftTopCorner } from "@/assets/icons/leftTopCornerIcon"
+import { BottomRight } from "@/assets/icons/bottomRightIcon"
 
 
 
@@ -9,8 +13,33 @@ export const Dashboard = ({ orgs }: any) => {
     return (
         <div>
             {/* navbar */}
-            <nav className="font-satoshi-black   w-screen fixed top-0 h-16 z-10 border-b-1 flex items-center px-16 tracking-tighter">
-                nameoftheproject
+            <nav className="  justify-between  w-screen fixed top-0 h-16 z-10 border-b-1 flex items-center px-16 tracking-tighter">
+                <div className="font-satoshi-black">
+                    nameoftheproject
+                </div>
+
+                <div className="relative w-[50%] border-1  font-satoshi-regular h-[50%] " >
+                    <span className="absolute top-0  left-0   ">
+                        <LeftTopCorner />
+                    </span>
+                    <span className="absolute    bottom-0 left-0   ">
+                        <BottomLeft />
+                    </span>
+
+                    <input className="w-full px-2 flex items-center border-none focus:outline-none text-[#414148]  h-[100%]" type="text" placeholder="Search Orgs..." />
+
+                    <span className="absolute    top-0 right-0   ">
+                        <TopRight />
+                    </span>
+                    <span className="absolute    bottom-0 right-0   ">
+                        <BottomRight />
+                    </span>
+
+                </div>
+
+                {/* <div className="font-satoshi-bold">
+                    go to the page
+                </div> */}
             </nav>
 
             {/* orgs */}
