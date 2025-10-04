@@ -7,7 +7,7 @@ import {
 } from 'crawlee';
 import crypto from 'crypto';
 import { text } from 'stream/consumers';
-
+import { cacheValidator, logCacheSession } from './caching/betterCacheValidator.js';
 export const router = createPlaywrightRouter();
 
 function makeKeyFromOrgName(orgName) {
@@ -64,6 +64,10 @@ router.addHandler('ORG', async ({ page, request, log, enqueueLinks }) => {
     const orgName = await page
         .locator('.constrainer--line-length h2 span')
         .textContent();
+    const tagLine = await page
+        .locator('.constrainer--line-length p')
+        .textContent();
+
     const websiteLink = await page
         .locator('.link__wrapper a')
         .getAttribute('href');
@@ -135,9 +139,20 @@ router.addHandler('ORG', async ({ page, request, log, enqueueLinks }) => {
     topicTags = topicTags.split(",").map(e => e.trim())
 
     // Build the value we want to store (including the original orgName)
-    console.log("YEAR", process.env.YEAR)
+    // console.log("YEAR", process.env.YEAR)
+
+
+    const name = orgName.trim();
+    const cachedOrgGithubLink = await cacheValidator(name);
+
+
+    // Compute a “safe” key
+    const key = makeKeyFromOrgName(orgName);
+    const store = await KeyValueStore.open('org-data');
+
     const baseData = {
         orgName,
+        tagLine,
         year: process.env.YEAR,
         logoUrl: imageData.src,
         url: request.url,
@@ -151,12 +166,26 @@ router.addHandler('ORG', async ({ page, request, log, enqueueLinks }) => {
         githubLinksFromProjects: [],
         lastUpdated: new Date().toISOString(),
     };
-    // Compute a “safe” key
-    const key = makeKeyFromOrgName(orgName);
-    const store = await KeyValueStore.open('org-data');
-    await store.setValue(key, baseData);
 
-    // Enqueue the website (if exists), passing only k  ey
+    if (cachedOrgGithubLink != null) {
+        baseData.githubLink = cachedOrgGithubLink;
+        baseData.cached = true
+
+        await store.setValue(key, baseData);
+        await logCacheSession(name, 'hit');
+        console.log(`✅ Cached org ${baseData.orgName} - skipping scraping`);
+        
+        return;
+    }
+
+    baseData.cached = false;
+
+    await store.setValue(key, baseData);
+    await logCacheSession(name, 'miss'); // Log cache miss
+    console.log(`🆕 New org ${baseData.orgName} - will scrape`);
+
+
+
     if (websiteLink) {
         log.info(`Enqueuing websiteLink for ORGLINK (key=${key}): ${websiteLink}`);
         await enqueueLinks({
@@ -167,6 +196,7 @@ router.addHandler('ORG', async ({ page, request, log, enqueueLinks }) => {
         });
     } else {
         log.warning(`No websiteLink for org="${orgName}". KVS entry created.`);
+
     }
 });
 
@@ -249,6 +279,12 @@ router.addHandler('PROJECTS', async ({ request, page, log }) => {
         githubLinksFromProjects: mergedProjects,
         lastUpdated: new Date().toISOString(),
     });
+
+    // await store.setValue(key, {
+    //     ...existing, 
+    //     githubLink, 
+    //      lastUpdated: new Date().toISOString(),
+    // })
 });
 
 // get all the organizations first. 

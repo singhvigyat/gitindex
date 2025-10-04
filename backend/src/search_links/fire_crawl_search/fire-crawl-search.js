@@ -69,7 +69,7 @@ async function parsefile(inputFile, outputFile) {
             console.log(`Searching for: ${query}`);
             console.log('-'.repeat(50))
 
-            const links = await fireCrawlSearch(query, API_KEY);
+            const links = await fireCrawlSearch(query);
 
 
             let githubLink = links[0];
@@ -101,10 +101,10 @@ async function parsefile(inputFile, outputFile) {
             console.log(`Orgs with at least one GitHub link: ${withLink}`);
             console.log(`Orgs with no GitHub links: ${withoutLink}`);
 
-            await fs.writeFile(outputFile, JSON.stringify(out, null, 2));
             console.log(`✅ Filtered data written to ${outputFile}`);
         }
     }
+    await fs.writeFile(outputFile, JSON.stringify(out, null, 2));
 
 }
 

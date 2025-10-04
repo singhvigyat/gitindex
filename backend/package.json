@@ -5,9 +5,12 @@
     "description": "This is an example of a Crawlee project.",
     "dependencies": {
         "@mendable/firecrawl-js": "^1.29.3",
+        "@types/cors": "^2.8.19",
         "axios": "^1.11.0",
+        "cors": "^2.8.5",
         "crawlee": "^3.0.0",
         "dotenv": "^17.2.1",
+        "express": "^5.1.0",
         "fetch": "^1.1.0",
         "jaro-winkler": "^0.2.8",
         "node-fetch": "^3.3.2",
@@ -16,14 +19,15 @@
     "scripts": {
         "dev": "node src/main.js",
         "ts": "npx tsc -b && node dist/main.js",
-
         "build": "npm run clean && tsc -b && npm run copy-assets",
         "clean": "rimraf dist",
-        "copy-assets": "copyfiles -u 1 \"src/data/**/*.*\" dist"
+        "copy-assets": "copyfiles -u 1 \"src/data/**/*.*\" dist",
+        "server": "npx tsc -b && node dist/server.js"
     },
     "author": "It's not you it's me",
     "license": "ISC",
     "devDependencies": {
+        "@types/express": "^5.0.3",
         "@types/node": "^24.3.1",
         "copyfiles": "^2.4.1",
         "rimraf": "^6.0.1",

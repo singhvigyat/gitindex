@@ -5,6 +5,7 @@ import { channel } from "diagnostics_channel";
 
 interface OrgData {
     orgName: string;
+    tagLine: string;
     githubLink?: string | null;
     year?: string;
     logoUrl?: string;
@@ -22,6 +23,9 @@ interface OrgData {
 }
 
 let orgCache: Map<string, OrgData> | null = null;
+let cacheBuiltAt: number | null = null;
+const CACHE_TTL_MS = 3600000; // 1 hour in milliseconds
+
 let cacheStats = {
     totalOrgs: 0,
     orgsWithGithubLinks: 0,
@@ -86,15 +90,19 @@ async function buildCache(): Promise<Map<string, OrgData>> {
 
     const crossYearBenefit = cacheStats.orgsWithGithubLinks;
     console.log(`⚡ Potential API savings for future years: ${crossYearBenefit} searches`);
-
+    cacheBuiltAt = Date.now();
     return cache;
 
 }
 
 export async function cacheValidator(orgName: string): Promise<string | null> {
-    if (!orgCache) {
-        orgCache = await buildCache()
+
+    const now = Date.now();
+
+    if (!orgCache || !cacheBuiltAt || (now - cacheBuiltAt) > CACHE_TTL_MS) {
+        orgCache = await buildCache();
     }
+
     cacheStats.lookups++;
     const normalizedName = (orgName ?? "").toString().trim().toLowerCase()
 
