@@ -35,5 +35,5 @@
   },
   "include": [
     "src"
-  ]
+, "../files/(better)rw-ASCII-2.tsx", "../files/rw-ASCII-1.tsx"  ]
 }
