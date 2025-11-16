@@ -17,12 +17,12 @@
         "playwright": "*"
     },
     "scripts": {
-        "dev": "node src/main.js",
+        "dev": "node dist/main.js",
+        "server": "npx tsc -b && node dist/server.js",
         "ts": "npx tsc -b && node dist/main.js",
         "build": "npm run clean && tsc -b && npm run copy-assets",
         "clean": "rimraf dist",
-        "copy-assets": "copyfiles -u 1 \"src/data/**/*.*\" dist",
-        "server": "npx tsc -b && node dist/server.js"
+        "copy-assets": "copyfiles -u 1 \"src/data/**/*.*\" dist"
     },
     "author": "It's not you it's me",
     "license": "ISC",

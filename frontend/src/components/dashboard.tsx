@@ -8,7 +8,7 @@ import { PaginationComp } from "./ui/paginationComp"
 
 
 
-export const Dashboard = ({ orgs }: any) => {
+export const Dashboard = ({ orgs, setYear, allOrgs }: any) => {
     return (
         <div>
             {/* navbar */}
@@ -42,36 +42,19 @@ export const Dashboard = ({ orgs }: any) => {
             </nav>
 
             {/* orgs */}
-            <div className="w-fit h-fit overflow-y-auto
-">
-                 {/* <div className="flex flex-wrap content-start w-[calc(100%-20%)] pt-20 p-4"> */}
-
-                    {/* {
-                        Object.entries(orgs).map(([_, e]: any) => {
-                            // return Object.entries(e).map(([keys, value]: any) => {
-                            return <Card key={_} logoUrl={e.logoUrl} orgName={e.orgName} tagline={e.tagLine} tags={e.techContent || []} />
-                            // return <div key={keys}>{JSON.stringify(value)}</div>
-                            // })
-                        })
-                    } */}
-
-                    <PaginationComp orgs={orgs} />
-
-                {/* </div>  */}
-
-
-
+            <div className="w-fit h-fit overflow-y-auto">
+                
+                <PaginationComp orgs={orgs} />
             </div>
 
 
             {/* Sidebar */}
             <div className=" w-1/5 h-full fixed right-0 top-16 z-20 border-l-1  ">
                 {/* filters */}
-                <div className="h-  20">
-
+                <div className="h-20">
                 </div>
                 <div className="mt-0 h-full flex items-start p-3 font-satoshi-regular">
-                    <AccordionSideBar />
+                    <AccordionSideBar setYear={setYear} allOrgs={allOrgs}/>
                 </div>
 
                 {/* links */}

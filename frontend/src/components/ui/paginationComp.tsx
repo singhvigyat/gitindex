@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     Pagination,
     PaginationContent,
@@ -12,14 +12,27 @@ import { Card } from "../cardComponent";
 
 export const PaginationComp = ({ orgs }: any) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const itemsPerPage = 10;
-    const totalItems = Object.keys(orgs).length;
+    const itemsPerPage = 50;
+
+    const allOrgs = (orgs && Array.isArray(orgs))
+        ? orgs.reduce((accumulator, currentYearObject) => {
+            // 1. extract the org objects (the values)
+            const currentOrgs = Object.values(currentYearObject);
+
+            // 2. add all these values to a new array
+            return accumulator.concat(currentOrgs);
+        }, [])
+        : [];
+
+
+    const totalItems = allOrgs.length;
 
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     let startIndex = (currentPage - 1) * itemsPerPage;
     let endIndex = startIndex + itemsPerPage;
-    let currentItems = Object.values(orgs).slice(startIndex, endIndex);
+    let currentItems = allOrgs.slice(startIndex, endIndex);
+    console.log("current items", currentItems)
     let pageNumbers = []
 
     for (let i = 0; i < totalPages; ++i) {
