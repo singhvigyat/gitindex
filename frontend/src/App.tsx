@@ -16,7 +16,7 @@ function App() {
     // const orgs = await axios.get(`${import.meta.env.VITE_URL}/api/org/getOrgs?year=${year}`)
     // console.log("orgs are -> ", orgs.data.organizations)
     // return orgs.data.organizations;
-    console.log(year);
+    console.log("Year selected are ", year);
 
     // year = year.filter((value: any, index: any, self: any) => {
     //   return self.indexOf(value) === index;
@@ -37,16 +37,18 @@ function App() {
     console.log("to know the order")
     // const allOrgs = await axios.get(`${import.meta.env.VITE_URL}/api/org/getAllOrgs`);
     const response = await axios.get(`${import.meta.env.VITE_URL}/api/org/getAllOrgs`);
-    // console.log(response.data.allOrgsMap)
-
+    console.log("ressponse from be: ", Object.keys(response.data.allOrgsMap).map(Number))
+    console.log("after getting all the orgs from the be: ")
     setAllOrgs(response.data.allOrgsMap)
-
-    setYear([currentYear]);
+    //@ts-ignore
+    console.log((Object.keys(response.data.allOrgsMap).map(Number)))
+    //@ts-ignore
+    setYear(Object.keys(response.data.allOrgsMap).map(Number));
   }
 
   const get = async (year: number[]) => {
     console.log("sending req to getOrgs: ", year)
-    if (year.length == 0) year.push(currentYear)
+    if (year.length == 0) console.log("year have length 0 ")
 
     const selectedOrgs = await getOrgs(year)
     setOrgs(selectedOrgs)
@@ -61,6 +63,8 @@ function App() {
 
   useEffect(() => {
     // if (year.length === 1 && year[0] !== currentYear)
+    console.log("years length is : ", year.length)
+    console.log("years chaneged ", "*--------------------------------------------------")
     if (year.length !== 0)
       get(year);
   }, [year])

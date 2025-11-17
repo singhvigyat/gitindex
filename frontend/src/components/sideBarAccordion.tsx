@@ -4,7 +4,9 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// remove the redundant code from this file. 
 
 // currently if nothing is selected, then currentYear org is selected, by default (and it appears that it's unchecked -> that is the problem fix that )
 // if default is again selected ? 
@@ -14,14 +16,41 @@ import { useState } from "react";
 
 export function AccordionSideBar({ setYear, allOrgs }: any) {
     // const currentYear = new Date().getFullYear() - 1; // Default year
-    const [isChecked, setIsChecked] = useState(true)
+    const [selectedYear, setSelectedYear] = useState<number[]>([]);
+    // const [allOrgsChecked, setAllOrgsChecked] = useState(true)
 
-    const handler = (e: any) => {
-        setYear((i: any) => e.target.checked ? [...i, 2024] : i.filter((x: any) => x != 2024))
-        if(!e.target.checked) {
+    useEffect(() => {
+        console.log("inside useeffect ", selectedYear)
+        if (selectedYear.length === 0) {
+            console.log("selected year is empty", selectedYear)
+            setYear(Object.keys(allOrgs))
+            console.log("done setting to all orgs")
+        }else
+        setYear(selectedYear);
+
+    }, [selectedYear, setYear])
+
+    const handler = (e: any, year: number) => {
+        // setYear((i: any) => e.target.checked ? [...i, 2024] : i.filter((x: any) => x != 2024))
+        console.log("came here for year: ", year)
+
+        if (e.target.checked) {
+            // selectedYear.push(year)
+            setSelectedYear((previousSelectedYear: number[]) => {
+                return [...previousSelectedYear, year];
+            })
+            // console.log(selectedYear)
+        }
+        else {
+            setSelectedYear((previousSelectedYear: number[]) => {
+                return previousSelectedYear.filter((x: number) => x !== year);
+            })
+
+            // console.log(selectedYear)
+            console.log(`${year} unselected`, "selected year length ", selectedYear.length)
+
             
         }
-        setIsChecked(!isChecked)
     }
 
 
@@ -35,29 +64,28 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
             <AccordionItem value="item-1">
                 <AccordionTrigger className="font-satoshi-bold">Years</AccordionTrigger>
                 <AccordionContent className="flex flex-col  text-[#414148] ">
+
                     <div className="flex flex-wrap flex-3 w-full">
-                        {/* {`it is this ${setYear}`} */}
-                        {/* <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2024] : i.filter((x: any) => x != 2024)) }}
+                        {/* <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" > */}
+                        {/* <input
+                                onChange={(e) => { setYear(() => e.target.checked ? Object.keys(allOrgs) : null) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
-                                checked= {true}
+                                checked={allOrgsChecked}
                             />
                             All Orgs
                         </label> */}
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { handler(e) }}
+                                onChange={(e) => { handler(e, 2024) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
-                                checked={isChecked}
                             />
                             2024
                         </label>
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2023] : i.filter((x: any) => x != 2023)) }}
+                                onChange={(e) => { handler(e, 2023) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
                             />
@@ -65,7 +93,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                         </label>
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2022] : i.filter((x: any) => x != 2022)) }}
+                                onChange={(e) => { handler(e, 2022) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
                             />
@@ -73,7 +101,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                         </label>
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2021] : i.filter((x: any) => x != 2021)) }}
+                                onChange={(e) => { handler(e, 2021) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
                             />
@@ -81,7 +109,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                         </label>
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2020] : i.filter((x: any) => x != 2020)) }}
+                                onChange={(e) => { handler(e, 2020) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
                             />
@@ -89,7 +117,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                         </label>
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2019] : i.filter((x: any) => x != 2019)) }}
+                                onChange={(e) => { handler(e, 2019) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
                             />
@@ -97,7 +125,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                         </label>
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2018] : i.filter((x: any) => x != 2018)) }}
+                                onChange={(e) => { handler(e, 2018) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
                             />
@@ -105,7 +133,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                         </label>
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2017] : i.filter((x: any) => x != 2017)) }}
+                                onChange={(e) => { handler(e, 2017) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
                             />
@@ -113,7 +141,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                         </label>
                         <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
                             <input
-                                onChange={(e) => { setYear((i: any) => e.target.checked ? [...i, 2016] : i.filter((x: any) => x != 2016)) }}
+                                onChange={(e) => { handler(e, 2016) }}
                                 type="checkbox"
                                 className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
                             />
