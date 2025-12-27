@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import {
     Pagination,
     PaginationContent,
@@ -33,6 +33,8 @@ export const PaginationComp = ({ orgs }: any) => {
     let endIndex = startIndex + itemsPerPage;
     let currentItems = allOrgs.slice(startIndex, endIndex);
     console.log("current items", currentItems)
+
+    console.log("current items", currentItems.length)
     let pageNumbers = []
 
     for (let i = 0; i < totalPages; ++i) {
@@ -44,6 +46,13 @@ export const PaginationComp = ({ orgs }: any) => {
         if (currentPage < 1 || currentPage > totalPages) return;
         setCurrentPage(currentPage)
     }
+
+    useEffect(() => {
+        if (currentItems.length === 0) {
+            setCurrentPage(1);
+        }
+    }, [currentItems])
+
 
     return (
         <div>
