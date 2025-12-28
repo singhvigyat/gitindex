@@ -8,12 +8,6 @@ import { useEffect, useState } from "react";
 
 // remove the redundant code from this file. 
 
-// currently if nothing is selected, then currentYear org is selected, by default (and it appears that it's unchecked -> that is the problem fix that )
-// if default is again selected ? 
-// if unchecked then how will we handle ? 
-// if unchecked how to remove from the array ? 
-// how to take care of the duplicate entries of orgs ? (while multiple years are selected) 
-
 export function AccordionSideBar({ setYear, allOrgs }: any) {
     // const currentYear = new Date().getFullYear() - 1; // Default year
     const [selectedYear, setSelectedYear] = useState<number[]>([]);
@@ -65,7 +59,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                 <AccordionTrigger className="font-satoshi-bold">Years</AccordionTrigger>
                 <AccordionContent className="flex flex-col  text-[#414148] ">
 
-                    <div className="flex flex-wrap flex-3 w-full">
+                    <div className="flex flex-wrap w-full gap-1.5 justify-center">
                         {/* <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" > */}
                         {/* <input
                                 onChange={(e) => { setYear(() => e.target.checked ? Object.keys(allOrgs) : null) }}
@@ -75,7 +69,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             All Orgs
                         </label> */}
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2024) }}
                                 type="checkbox"
@@ -83,7 +77,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             2024
                         </label>
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2023) }}
                                 type="checkbox"
@@ -91,7 +85,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             2023
                         </label>
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2022) }}
                                 type="checkbox"
@@ -99,7 +93,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             2022
                         </label>
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2021) }}
                                 type="checkbox"
@@ -107,7 +101,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             2021
                         </label>
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2020) }}
                                 type="checkbox"
@@ -115,7 +109,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             2020
                         </label>
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2019) }}
                                 type="checkbox"
@@ -123,7 +117,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             2019
                         </label>
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2018) }}
                                 type="checkbox"
@@ -131,7 +125,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             2018
                         </label>
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2017) }}
                                 type="checkbox"
@@ -139,7 +133,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                             />
                             2017
                         </label>
-                        <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" >
+                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                             <input
                                 onChange={(e) => { handler(e, 2016) }}
                                 type="checkbox"
