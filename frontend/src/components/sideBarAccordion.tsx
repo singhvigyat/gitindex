@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 
 // remove the redundant code from this file. 
 
-export function AccordionSideBar({ setYear, allOrgs }: any) {
+export function AccordionSideBar({ setYear, allOrgs, allYears }: any) {
+
     // const currentYear = new Date().getFullYear() - 1; // Default year
     const [selectedYear, setSelectedYear] = useState<number[]>([]);
     // const [allOrgsChecked, setAllOrgsChecked] = useState(true)
@@ -19,8 +20,8 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
             console.log("selected year is empty", selectedYear)
             setYear(Object.keys(allOrgs))
             console.log("done setting to all orgs")
-        }else
-        setYear(selectedYear);
+        } else
+            setYear(selectedYear);
 
     }, [selectedYear, setYear])
 
@@ -43,7 +44,7 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
             // console.log(selectedYear)
             console.log(`${year} unselected`, "selected year length ", selectedYear.length)
 
-            
+
         }
     }
 
@@ -60,117 +61,20 @@ export function AccordionSideBar({ setYear, allOrgs }: any) {
                 <AccordionContent className="flex flex-col  text-[#414148] ">
 
                     <div className="flex flex-wrap w-full gap-1.5 justify-center">
-                        {/* <label className="flex items-center gap-2 px-4 text-xs cursor-pointer" > */}
-                        {/* <input
-                                onChange={(e) => { setYear(() => e.target.checked ? Object.keys(allOrgs) : null) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
-                                checked={allOrgsChecked}
-                            />
-                            All Orgs
-                        </label> */}
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2024) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
-                            />
-                            2024
-                        </label>
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2023) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
-                            />
-                            2023
-                        </label>
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2022) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
-                            />
-                            2022
-                        </label>
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2021) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
-                            />
-                            2021
-                        </label>
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2020) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
-                            />
-                            2020
-                        </label>
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2019) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
-                            />
-                            2019
-                        </label>
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2018) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
-                            />
-                            2018
-                        </label>
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2017) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
-                            />
-                            2017
-                        </label>
-                        <label className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
-                            <input
-                                onChange={(e) => { handler(e, 2016) }}
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black cursor-pointer"
-                            />
-                            2016
-                        </label>
-                    </div>
-                </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-3">
-                <AccordionTrigger className="font-satoshi-bold">Technologies</AccordionTrigger>
-                <AccordionContent className="flex flex-col  text-balance text-[#414148] ">
-                    <div className="w-full  mr-2 flex flex-wrap ">
-
-                        <label className="flex items-center gap-2 px-4 text-xs">
-                            <input
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black"
-                            />
-                            csdfdsfsdfsdsdfsdsdfsdfdsf
-                        </label>
-                        <label className="flex items-center gap-2 px-4 text-xs">
-                            <input
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black"
-                            />
-                            c++sdfdfsdfdsdfsdfsdfsdfsdf
-                        </label>
-                        <label className="flex items-center gap-2 px-4 text-xs">
-                            <input
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black"
-                            />
-                            assembly
-                        </label>
+                       
+                        {
+                           allYears.map((ele: any, index:any) => (
+                                <label key={index} className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
+                                    <input
+                                        onChange={(e) => { handler(e, ele) }}
+                                        type="checkbox"
+                                        className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
+                                    />
+                                    {(ele)}
+                                </label>
+                           ))
+                        }
+                        
 
                     </div>
                 </AccordionContent>

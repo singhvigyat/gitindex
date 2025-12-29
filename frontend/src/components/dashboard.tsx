@@ -4,11 +4,12 @@ import { TopRight } from "@/assets/icons/topRightIcon"
 import { LeftTopCorner } from "@/assets/icons/leftTopCornerIcon"
 import { BottomRight } from "@/assets/icons/bottomRightIcon"
 import { PaginationComp } from "./ui/paginationComp"
+import { ssrExportAllKey } from "vite/module-runner"
 
 
 
 
-export const Dashboard = ({ orgs, setYear, allOrgs }: any) => {
+export const Dashboard = ({ orgs, setYear, allOrgs, allYears }: any) => {
     return (
         <div>
             {/* navbar */}
@@ -54,7 +55,7 @@ export const Dashboard = ({ orgs, setYear, allOrgs }: any) => {
                 <div className="h-20">
                 </div>
                 <div className="mt-0 h-full flex items-start p-3 font-satoshi-regular">
-                    <AccordionSideBar setYear={setYear} allOrgs={allOrgs}/>
+                    <AccordionSideBar allYears={allYears} setYear={setYear} allOrgs={allOrgs}/>
                 </div>
 
                 {/* links */}

@@ -11,6 +11,7 @@ function App() {
   const [orgs, setOrgs] = useState<object>({});
   const [year, setYear] = useState<number[]>([]);
   const [allOrgs, setAllOrgs] = useState({})
+  const [allYears, setAllYears] = useState<number[]>([])
 
   const getOrgs = async (year: any) => {
     // const orgs = await axios.get(`${import.meta.env.VITE_URL}/api/org/getOrgs?year=${year}`)
@@ -37,8 +38,14 @@ function App() {
     console.log("to know the order")
     // const allOrgs = await axios.get(`${import.meta.env.VITE_URL}/api/org/getAllOrgs`);
     const response = await axios.get(`${import.meta.env.VITE_URL}/api/org/getAllOrgs`);
-    console.log("ressponse from be: ", Object.keys(response.data.allOrgsMap).map(Number))
-    console.log("after getting all the orgs from the be: ")
+    // console.log("ressponse from be: ", Object.keys(response.data.allOrgsMap).map(Number))
+
+    // console.log("after getting all the orgs from the be: ")
+    console.log("all years are: ", Object.values(response.data.allYearsArray).map(Number))
+    const Years = (Object.values(response.data.allYearsArray).map(Number))
+    //  console.log(Years)
+
+    setAllYears(Years)
     setAllOrgs(response.data.allOrgsMap)
     //@ts-ignore
     console.log((Object.keys(response.data.allOrgsMap).map(Number)))
@@ -73,7 +80,7 @@ function App() {
     <>
       <div className='flex items-center justify-center min-h-screen'>
 
-        <Dashboard orgs={orgs} setYear={setYear} allOrgs={allOrgs} />
+        <Dashboard allYears={allYears} orgs={orgs} setYear={setYear} allOrgs={allOrgs} />
 
       </div>
     </>

@@ -13,6 +13,7 @@ export const getAllOrgs = (req: any, res: any) => {
     // console.log(`total years are : ${numberOfFiles}`)
     let allOrgs: any = []
     let allOrgsMap = new Map()
+    let allYearsSet = new Set();
 
     fs.readdirSync(finalOrgs).forEach(files => {
         const file = files;
@@ -23,18 +24,22 @@ export const getAllOrgs = (req: any, res: any) => {
         // console.log("year ", year);
         allOrgs.push({ year, orgsOfYear });
         allOrgsMap.set(year, orgsOfYear)
+        allYearsSet.add(year)
         // console.log(allOrgsMap)
         // console.log(allOrgs.length)
     }
 
+
     )
+    console.log("all orgs are:", allYearsSet)
 
     console.log("final length is ", allOrgsMap.size)
 
-
+    let allYearsArray = Array.from(allYearsSet);
     res.json({
         allOrgs
-        , allOrgsMap: Object.fromEntries(allOrgsMap)
+        , allOrgsMap: Object.fromEntries(allOrgsMap),
+        allYearsArray
     })
 
 
