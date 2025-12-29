@@ -4,47 +4,66 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { useEffect, useState } from "react";
 
-// remove the redundant code from this file. 
-
-export function AccordionSideBar({ setYear, allOrgs, allYears }: any) {
+export function AccordionSideBar({allYears, allTopics, allTechnologies, setActiveFilters }: any) {
 
     // const currentYear = new Date().getFullYear() - 1; // Default year
-    const [selectedYear, setSelectedYear] = useState<number[]>([]);
-    // const [allOrgsChecked, setAllOrgsChecked] = useState(true)
-
-    useEffect(() => {
-        console.log("inside useeffect ", selectedYear)
-        if (selectedYear.length === 0) {
-            console.log("selected year is empty", selectedYear)
-            setYear(Object.keys(allOrgs))
-            console.log("done setting to all orgs")
-        } else
-            setYear(selectedYear);
-
-    }, [selectedYear, setYear])
-
-    const handler = (e: any, year: number) => {
-        // setYear((i: any) => e.target.checked ? [...i, 2024] : i.filter((x: any) => x != 2024))
+ 
+    const yearHandler = (e: any, year: number) => {
         console.log("came here for year: ", year)
 
         if (e.target.checked) {
-            // selectedYear.push(year)
-            setSelectedYear((previousSelectedYear: number[]) => {
-                return [...previousSelectedYear, year];
+            setActiveFilters((prev: any) => ({
+                ...prev,
+                years: [...prev.years, year]
             })
-            // console.log(selectedYear)
+            )
+
         }
         else {
-            setSelectedYear((previousSelectedYear: number[]) => {
-                return previousSelectedYear.filter((x: number) => x !== year);
+            setActiveFilters((prev: any) => ({
+                ...prev,
+                years: prev.years.filter((x: number) => x !== year)
+            }))
+
+        }
+    }
+
+    const topicHandler = (e: any, topic: String) => {
+        console.log("came here for topic: ", topic)
+
+        if (e.target.checked) {
+            setActiveFilters((prev: any) => ({
+                ...prev,
+                topics: [...prev.topics, topic]
             })
+            )
 
-            // console.log(selectedYear)
-            console.log(`${year} unselected`, "selected year length ", selectedYear.length)
+        }
+        else {
+            setActiveFilters((prev: any) => ({
+                ...prev,
+                topics: prev.topics.filter((x: String) => x !== topic)
+            }))
+        }
+    }
 
+    const technologiesHandler = (e: any, technology: String) => {
+        console.log("came here for topic: ", technology)
 
+        if (e.target.checked) {
+            setActiveFilters((prev: any) => ({
+                ...prev,
+                techs: [...prev.techs, technology]
+            })
+            )
+
+        }
+        else {
+            setActiveFilters((prev: any) => ({
+                ...prev,
+                techs: prev.techs.filter((x: String) => x !== technology)
+            }))
         }
     }
 
@@ -61,50 +80,72 @@ export function AccordionSideBar({ setYear, allOrgs, allYears }: any) {
                 <AccordionContent className="flex flex-col  text-[#414148] ">
 
                     <div className="flex flex-wrap w-full gap-1.5 justify-center">
-                       
+
                         {
-                           allYears.map((ele: any, index:any) => (
+                            allYears.map((ele: any, index: any) => (
                                 <label key={index} className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                                     <input
-                                        onChange={(e) => { handler(e, ele) }}
+                                        onChange={(e) => { yearHandler(e, ele) }}
                                         type="checkbox"
                                         className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
                                     />
                                     {(ele)}
                                 </label>
-                           ))
+                            ))
                         }
-                        
+
 
                     </div>
                 </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-4">
+
+            <AccordionItem value="item-2">
+                <AccordionTrigger className="font-satoshi-bold">Technologies</AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4 text-balance text-[#414148] ">
+                    <div className="">
+                        <div className="flex flex-wrap w-full gap-1.5 justify-center h-[30vh] overflow-auto">
+                            {
+                                allTechnologies.map((ele: any, index: any) => (
+                                    <label key={index} className="flex w-full items-center gap-2  text-xs cursor-pointer" >
+                                        <input
+                                            onChange={(e) => { technologiesHandler(e, ele) }}
+                                            type="checkbox"
+                                            className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
+                                        />
+                                        {(ele)}
+                                    </label>
+                                ))
+                            }
+                        </div>
+                        {/* <div className="bg-red-300">
+                            View all
+                            </div> */}
+
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-3">
                 <AccordionTrigger className="font-satoshi-bold">Topics</AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance text-[#414148] ">
-                    <div className="flex flex-wrap w-full">
-
-                        <label className="flex items-center gap-2 px-4 text-xs">
-                            <input
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black"
-                            />
-                            2024
-                        </label>
-                        <label className="flex items-center gap-2 px-4 text-xs">
-                            <input
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black"
-                            />
-                            2023
-                        </label>
-                        <label className="flex items-center gap-2 px-4 text-xs">
-                            <input
-                                type="checkbox"
-                                className="h-3 w-3 rounded border  accent-black focus:ring-black"
-                            />
-                            2022
-                        </label>
+                    <div className="">
+                        <div className="flex flex-wrap w-full gap-1.5 justify-center h-[30vh] overflow-auto">
+                            {
+                                allTopics.map((ele: any, index: any) => (
+                                    <label key={index} className="flex w-full items-center gap-2  text-xs cursor-pointer" >
+                                        <input
+                                            onChange={(e) => { topicHandler(e, ele) }}
+                                            type="checkbox"
+                                            className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
+                                        />
+                                        {(ele)}
+                                    </label>
+                                ))
+                            }
+                        </div>
+                        {/* <div className="bg-red-300">
+                            View all
+                            </div> */}
 
                     </div>
                 </AccordionContent>

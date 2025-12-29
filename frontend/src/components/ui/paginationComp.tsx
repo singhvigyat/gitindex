@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Pagination,
     PaginationContent,
@@ -14,16 +14,10 @@ export const PaginationComp = ({ orgs }: any) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 50;
 
-    const allOrgs = (orgs && Array.isArray(orgs))
-        ? orgs.reduce((accumulator, currentYearObject) => {
-            // 1. extract the org objects (the values)
-            const currentOrgs = Object.values(currentYearObject);
-
-            // 2. add all these values to a new array
-            return accumulator.concat(currentOrgs);
-        }, [])
-        : [];
-
+    const allOrgs = Array.isArray(orgs)     
+        ? orgs
+        : Object.values(orgs).flatMap((yearObj: any) => Object.values(yearObj));
+    console.log("orgsssssssssssssssssss are", orgs)
 
     const totalItems = allOrgs.length;
 

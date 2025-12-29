@@ -14,6 +14,8 @@ export const getAllOrgs = (req: any, res: any) => {
     let allOrgs: any = []
     let allOrgsMap = new Map()
     let allYearsSet = new Set();
+    let allTechnologies = new Set();
+    let allTopics = new Set();
 
     fs.readdirSync(finalOrgs).forEach(files => {
         const file = files;
@@ -21,25 +23,48 @@ export const getAllOrgs = (req: any, res: any) => {
         const jsonData = fs.readFileSync(yearFilePath, 'utf-8')
         const orgsOfYear = JSON.parse(jsonData);
         const year = file?.split('_')[1];
-        // console.log("year ", year);
+        //@ts-ignore
+        const techContentInFile = Object.values(orgsOfYear).flatMap(org => org.techContent)
+        //@ts-ignore
+        const topicContentInFile = Object.values(orgsOfYear).flatMap(org => org.topicContent)
+
+        // for (const [key, value] of Object.entries(orgsOfYear)) {
+        //     // console.log(value.techContent);
+        //     //@ts-ignore
+        //     value.techContent.map(ele => {
+        //         allTechnologies.add(ele)
+        //     })
+        // }
+
+        techContentInFile.forEach(ele => allTechnologies.add(ele))
+        topicContentInFile.forEach(ele => allTopics.add(ele))
+
         allOrgs.push({ year, orgsOfYear });
         allOrgsMap.set(year, orgsOfYear)
         allYearsSet.add(year)
+
         // console.log(allOrgsMap)
         // console.log(allOrgs.length)
     }
 
 
     )
+    console.log("alltechnologies are:  ", allTechnologies);
+    console.log("allTopics are:  ", allTopics);
     console.log("all orgs are:", allYearsSet)
 
     console.log("final length is ", allOrgsMap.size)
 
     let allYearsArray = Array.from(allYearsSet);
+    let allTechnologiesArray= Array.from(allTechnologies)
+    let allTopicsArray= Array.from(allTopics)
+
     res.json({
         allOrgs
         , allOrgsMap: Object.fromEntries(allOrgsMap),
-        allYearsArray
+        allYearsArray, 
+        allTopicsArray, 
+        allTechnologiesArray
     })
 
 

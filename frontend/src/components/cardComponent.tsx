@@ -27,7 +27,7 @@ export const Card = ({ orgName, tagline, tags, logoUrl }: cardProps) => {
             <div>
                 <LeftTopCorner />
             </div>
-            <div className="w-[30%] flex bg-amber-100    justify-center items-center m-1 bg-amber-20">
+            <div className="w-[10vw] flex bg-amber-100    justify-center items-center m-1 bg-amber-20">
                 <img
                     src={`${logoUrl}`}
                     alt="example"
