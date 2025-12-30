@@ -9,7 +9,7 @@ import { PaginationComp } from "./ui/paginationComp"
 
 
 
-export const Dashboard = ({ orgs, setYear, allOrgs, allYears, allTopics, allTechnologies, setActiveFilters }: any) => {
+export const Dashboard = ({ orgs, setYear, allOrgs, allYears, allTopics, allTechnologies, setActiveFilters , activeFilters}: any) => {
     return (
         <div>
             {/* navbar */}
@@ -55,7 +55,7 @@ export const Dashboard = ({ orgs, setYear, allOrgs, allYears, allTopics, allTech
                 <div className="h-20">
                 </div>
                 <div className="mt-0 h-full flex items-start p-3 font-satoshi-regular">
-                    <AccordionSideBar allTopics={allTopics} allTechnologies={allTechnologies} allYears={allYears} setActiveFilters= {setActiveFilters} setYear={setYear} allOrgs={allOrgs} />
+                    <AccordionSideBar activeFilters= {activeFilters} allTopics={allTopics} allTechnologies={allTechnologies} allYears={allYears} setActiveFilters= {setActiveFilters} setYear={setYear} allOrgs={allOrgs} />
                 </div>
 
                 {/* links */}

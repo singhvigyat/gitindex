@@ -47,7 +47,7 @@ async function buildCache(): Promise<Map<string, OrgData>> {
         files = await fs.readdir(finalOrgs);
     }
     catch (err: any) {
-        console.error(`❌ Cannot read directory ${finalOrgs}:`, err.message);
+        console.error(`Cannot read directory ${finalOrgs}:`, err.message);
         throw err;
     }
 
@@ -83,13 +83,13 @@ async function buildCache(): Promise<Map<string, OrgData>> {
     const years = new Set(Array.from(cache.values()).map(org => org.year).filter(Boolean));
 
 
-    console.log('✅ Cache built successfully!');
-    console.log(`📊 ${cacheStats.totalOrgs} total organizations`);
-    console.log(`🔗 ${cacheStats.orgsWithGithubLinks} with GitHub links`);
-    console.log(`📅 Years found: ${Array.from(years).sort().join(', ')}`);
+    console.log('Cache built successfully!');
+    console.log(` ${cacheStats.totalOrgs} total organizations`);
+    console.log(` ${cacheStats.orgsWithGithubLinks} with GitHub links`);
+    console.log(` Years found: ${Array.from(years).sort().join(', ')}`);
 
     const crossYearBenefit = cacheStats.orgsWithGithubLinks;
-    console.log(`⚡ Potential API savings for future years: ${crossYearBenefit} searches`);
+    console.log(` Potential API savings for future years: ${crossYearBenefit} searches`);
     cacheBuiltAt = Date.now();
     return cache;
 
@@ -130,13 +130,13 @@ export function getCacheStats() {
 
 export function logCacheSession(): void {
     const stats = getCacheStats()
-    console.log('\n📈 Cache Session Summary:');
-    console.log(`   🔍 Total lookups: ${stats.lookups}`);
-    console.log(`   ✅ Cache hits: ${stats.hits}`);
-    console.log(`   📊 Hit rate: ${stats.hitRate}`);
+    console.log('\n Cache Session Summary:');
+    console.log(`    Total lookups: ${stats.lookups}`);
+    console.log(`    Cache hits: ${stats.hits}`);
+    console.log(`    Hit rate: ${stats.hitRate}`);
 
     if (stats.hits > 0) {
-        console.log(`   💰 API calls saved: ${stats.hits}`);
-        console.log(`   ⏱️ File I/O operations saved: ${stats.hits * stats.totalOrgs}`);
+        console.log(`    API calls saved: ${stats.hits}`);
+        console.log(`    File I/O operations saved: ${stats.hits * stats.totalOrgs}`);
     }
 }

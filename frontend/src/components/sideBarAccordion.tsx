@@ -5,10 +5,10 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 
-export function AccordionSideBar({allYears, allTopics, allTechnologies, setActiveFilters }: any) {
+export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActiveFilters, activeFilters }: any) {
 
     // const currentYear = new Date().getFullYear() - 1; // Default year
- 
+
     const yearHandler = (e: any, year: number) => {
         console.log("came here for year: ", year)
 
@@ -85,6 +85,7 @@ export function AccordionSideBar({allYears, allTopics, allTechnologies, setActiv
                             allYears.map((ele: any, index: any) => (
                                 <label key={index} className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
                                     <input
+                                        checked={activeFilters.years.includes(ele)}
                                         onChange={(e) => { yearHandler(e, ele) }}
                                         type="checkbox"
                                         className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
@@ -102,26 +103,27 @@ export function AccordionSideBar({allYears, allTopics, allTechnologies, setActiv
             <AccordionItem value="item-2">
                 <AccordionTrigger className="font-satoshi-bold">Technologies</AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance text-[#414148] ">
-                    <div className="">
-                        <div className="flex flex-wrap w-full gap-1.5 justify-center h-[30vh] overflow-auto">
-                            {
-                                allTechnologies.map((ele: any, index: any) => (
-                                    <label key={index} className="flex w-full items-center gap-2  text-xs cursor-pointer" >
-                                        <input
-                                            onChange={(e) => { technologiesHandler(e, ele) }}
-                                            type="checkbox"
-                                            className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
-                                        />
-                                        {(ele)}
-                                    </label>
-                                ))
-                            }
-                        </div>
-                        {/* <div className="bg-red-300">
+                    {/* <div className=""> */}
+                    <div className="flex flex-wrap w-full gap-1.5 justify-center h-[30vh] overflow-auto">
+                        {
+                            allTechnologies.map((ele: any, index: any) => (
+                                <label key={index} className="flex w-full items-center gap-2  text-xs cursor-pointer" >
+                                    <input
+                                        checked={activeFilters.techs.includes(ele)}
+                                        onChange={(e) => { technologiesHandler(e, ele) }}
+                                        type="checkbox"
+                                        className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"
+                                    />
+                                    {(ele)}
+                                </label>
+                            ))
+                        }
+                    </div>
+                    {/* <div className="bg-red-300">
                             View all
                             </div> */}
 
-                    </div>
+                    {/* </div> */}
                 </AccordionContent>
             </AccordionItem>
 
@@ -134,6 +136,7 @@ export function AccordionSideBar({allYears, allTopics, allTechnologies, setActiv
                                 allTopics.map((ele: any, index: any) => (
                                     <label key={index} className="flex w-full items-center gap-2  text-xs cursor-pointer" >
                                         <input
+                                            checked={activeFilters.topics.includes(ele)}
                                             onChange={(e) => { topicHandler(e, ele) }}
                                             type="checkbox"
                                             className="h-3 w-3 rounded border  accent-black     focus:ring-black cursor-pointer"

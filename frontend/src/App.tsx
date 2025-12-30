@@ -149,7 +149,7 @@ function App() {
     <>
       <div className='flex items-center justify-center min-h-screen'>
 
-        <Dashboard setActiveFilters={setActiveFilters} allYears={allYears} orgs={orgs} setYear={setYear} allOrgs={allOrgs} allTechnologies={allTechnologies} allTopics={allTopics} />
+        <Dashboard activeFilters= {activeFilters} setActiveFilters={setActiveFilters} allYears={allYears} orgs={orgs} setYear={setYear} allOrgs={allOrgs} allTechnologies={allTechnologies} allTopics={allTopics} />
 
       </div>
     </>
