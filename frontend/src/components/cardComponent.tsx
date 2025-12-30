@@ -11,10 +11,13 @@ import { TagChip } from "./tagChip.tsx"
 interface cardProps {
     orgName: string,
     tagline: string,
-    tags: any, 
-    logoUrl: string
+    tags: any,
+    logoUrl: string,
+    githubLink: string,
+    websiteLink: string,
+    url: string
 }
-export const Card = ({ orgName, tagline, tags, logoUrl }: cardProps) => {
+export const Card = ({ orgName, tagline, tags, logoUrl, githubLink, websiteLink, url }: cardProps) => {
     return (
 
         <div className="flex border border-[#DDDDED] w-1/2  min-h-[145px] max-h-[150px] ">
@@ -31,7 +34,7 @@ export const Card = ({ orgName, tagline, tags, logoUrl }: cardProps) => {
                 <img
                     src={`${logoUrl}`}
                     alt="example"
-                    style={{ maxHeight: '90%',maxWidth: '100%' }}
+                    style={{ maxHeight: '90%', maxWidth: '100%' }}
                 />
             </div>
             <div className="pl-5 pt-1 w-[65%]  ">
@@ -57,12 +60,21 @@ export const Card = ({ orgName, tagline, tags, logoUrl }: cardProps) => {
                     <div className="cursor-pointer flex text-[12px] gap-2 font-satoshi-regular text-[#414148] ">
                         <div className="pt-3 flex items-center gap-1 hover:text-black ">
                             <Github />
-                            Github
+                            <a href={githubLink} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                Github
+                            </a>
                         </div>
                         <div className="pt-3 flex items-center justify-center hover:text-black">
                             <Link />
                             <span className="pl-1">
-                                Website
+                                <a
+                                    href={websiteLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:underline" 
+                                >
+                                    Website
+                                </a>
                             </span>
                         </div>
                         <div className="pt-3 flex items-center justify-center hover:text-black">
@@ -84,7 +96,14 @@ export const Card = ({ orgName, tagline, tags, logoUrl }: cardProps) => {
             </div>
 
             <span className="pr-2 flex items-center text-[#414148] hover:text-black ">
-                <Arrow />
+                <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Arrow />
+                </a>
+
             </span>
             {/* <span className="relative">
                     <span className="absolute bottom-0 left-0  bg-blue-200 ">

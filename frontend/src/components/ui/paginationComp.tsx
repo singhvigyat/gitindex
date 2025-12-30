@@ -65,6 +65,9 @@ export const PaginationComp = ({ orgs }: any) => {
                             tagline={item.tagLine}
                             tags={combinedArray}
                             logoUrl={item.logoUrl}
+                            githubLink={item.githubLink}
+                            websiteLink={item.websiteLink}
+                            url={item.url}
                         />
 
                     })
