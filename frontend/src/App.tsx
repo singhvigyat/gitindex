@@ -38,17 +38,19 @@ function App() {
     const Years = (Object.values(response.data.allYearsArray).map(Number))
 
     // console.log("hererererer", response.data.allTechnologiesArray)
-    const Technologies = (Object.values(response.data.allTechnologiesArray).map(String))              
+    const Technologies = (Object.values(response.data.allTechnologiesArray).map(String))
     // console.log("technologies fetched here: ", Technologies)
 
     const Topics = (Object.values(response.data.allTopicsArray).map(String))
     // console.log("topics are ", Topics)
 
+    const allOrganizations = Object.values(response.data.allOrgsMap).flatMap((y: any) => Object.values(y));
+
 
     setAllTechnologies(Technologies)
     setAllTopics(Topics)
     setAllYears(Years)
-    setAllOrgs(response.data.allOrgsMap)
+    setAllOrgs(allOrganizations)
 
     //@ts-ignore
     console.log((Object.keys(response.data.allOrgsMap).map(Number)))
@@ -117,10 +119,8 @@ function App() {
 
   useEffect(() => {
     // Flatten master data into a list of organizations
-    const allOrganizations = Object.values(allOrgs).flatMap((y: any) => Object.values(y));
-
-    console.log("dslkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk all orgs are: ", allOrgs) 
-    console.log("dslkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk all orgs are: ", allOrganizations) 
+    const allOrganizations = Object.values(allOrgs);
+    // const allOrganizations = allOrgs;
 
     const filtered = allOrganizations.filter((org: any) => {
       // 1. Year Filter: Check if org's year is in the selected years list
@@ -149,7 +149,7 @@ function App() {
     <>
       <div className='flex items-center justify-center min-h-screen'>
 
-        <Dashboard activeFilters= {activeFilters} setActiveFilters={setActiveFilters} allYears={allYears} orgs={orgs} setYear={setYear} allOrgs={allOrgs} allTechnologies={allTechnologies} allTopics={allTopics} />
+        <Dashboard setOrgs={setOrgs} activeFilters={activeFilters} setActiveFilters={setActiveFilters} allYears={allYears} orgs={orgs} setYear={setYear} allOrgs={allOrgs} allTechnologies={allTechnologies} allTopics={allTopics} />
 
       </div>
     </>

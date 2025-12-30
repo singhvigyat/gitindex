@@ -14,23 +14,26 @@ export const PaginationComp = ({ orgs }: any) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 50;
 
-    const allOrgs = Array.isArray(orgs)     
-        ? orgs
-        : Object.values(orgs).flatMap((yearObj: any) => Object.values(yearObj));
+    useEffect(() => { setCurrentPage(1) }, [orgs])
+
+    // const allOrgs = Array.isArray(orgs)
+    //     ? orgs
+    //     : Object.values(orgs).flatMap((yearObj: any) => Object.values(yearObj));
+
+    const allOrgs = Object.values(orgs)
     console.log("orgsssssssssssssssssss are", orgs)
 
     const totalItems = allOrgs.length;
-
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     let startIndex = (currentPage - 1) * itemsPerPage;
     let endIndex = startIndex + itemsPerPage;
     let currentItems = allOrgs.slice(startIndex, endIndex);
+
     console.log("current items", currentItems)
-
     console.log("current items", currentItems.length)
-    let pageNumbers = []
 
+    let pageNumbers = []
     for (let i = 0; i < totalPages; ++i) {
         pageNumbers.push(i);
     }
@@ -50,7 +53,7 @@ export const PaginationComp = ({ orgs }: any) => {
 
     return (
         <div>
-            <div className="flex flex-wrap content-start w-[calc(100%-20%)] pt-20 p-4">
+            <div className="flex flex-wrap w-[calc(100%-20%)] pt-20 p-4">
 
                 {currentItems && currentItems.length > 0 ? (
                     currentItems.map((item: any, index: number) =>
@@ -67,7 +70,7 @@ export const PaginationComp = ({ orgs }: any) => {
                     <p>No items to display</p>
                 )}
             </div>
-            <Pagination className="font-satoshi-bold pb-5 cursor-pointer  " >
+            <Pagination className="font-satoshi-bold pb-5 cursor-pointer" >
                 <PaginationContent>
 
                     <PaginationItem onClick={(e) => {
