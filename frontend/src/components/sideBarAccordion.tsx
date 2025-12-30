@@ -5,7 +5,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 
-export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActiveFilters, activeFilters }: any) {
+export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActiveFilters, activeFilters, setInput }: any) {
 
     // const currentYear = new Date().getFullYear() - 1; // Default year
 
@@ -27,6 +27,8 @@ export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActi
             }))
 
         }
+
+        setInput('')
     }
 
     const topicHandler = (e: any, topic: String) => {
@@ -46,6 +48,8 @@ export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActi
                 topics: prev.topics.filter((x: String) => x !== topic)
             }))
         }
+
+        setInput('')
     }
 
     const technologiesHandler = (e: any, technology: String) => {
@@ -65,6 +69,8 @@ export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActi
                 techs: prev.techs.filter((x: String) => x !== technology)
             }))
         }
+
+        setInput('')
     }
 
 

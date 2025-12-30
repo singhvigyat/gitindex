@@ -1,12 +1,14 @@
 import { AccordionSideBar } from "./sideBarAccordion"
 import { PaginationComp } from "./ui/paginationComp"
 import { SearchComp } from "./searchComponent"
+import { useState } from "react";
 
 
 
 
 
-export const Dashboard = ({setOrgs, orgs, setYear, allOrgs, allYears, allTopics, allTechnologies, setActiveFilters, activeFilters }: any) => {
+export const Dashboard = ({ setOrgs, orgs, setYear, allOrgs, allYears, allTopics, allTechnologies, setActiveFilters, activeFilters }: any) => {
+     const [input, setInput] = useState('');
     return (
         <div className="">
             {/* navbar */}
@@ -15,7 +17,7 @@ export const Dashboard = ({setOrgs, orgs, setYear, allOrgs, allYears, allTopics,
                     nameoftheproject
                 </div>
                 <div className="w-1/3 hidden sm:block">
-                    <SearchComp orgs={orgs} setOrgs={setOrgs} allOrgs={allOrgs}/>
+                    <SearchComp input={input} setInput={setInput} orgs={orgs} setOrgs={setOrgs} allOrgs={allOrgs} activeFilters={activeFilters} />
                 </div>
             </nav>
 
@@ -30,7 +32,7 @@ export const Dashboard = ({setOrgs, orgs, setYear, allOrgs, allYears, allTopics,
                 <div className="h-20">
                 </div>
                 <div className="mt-0 h-full flex items-start p-3 font-satoshi-regular">
-                    <AccordionSideBar activeFilters={activeFilters} allTopics={allTopics} allTechnologies={allTechnologies} allYears={allYears} setActiveFilters={setActiveFilters} setYear={setYear} allOrgs={allOrgs} />
+                    <AccordionSideBar setInput={setInput} activeFilters={activeFilters} allTopics={allTopics} allTechnologies={allTechnologies} allYears={allYears} setActiveFilters={setActiveFilters} setYear={setYear} allOrgs={allOrgs} />
                 </div>
 
                 {/* links */}

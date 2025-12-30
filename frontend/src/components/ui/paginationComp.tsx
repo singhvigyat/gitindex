@@ -56,16 +56,18 @@ export const PaginationComp = ({ orgs }: any) => {
             <div className="flex flex-wrap w-[calc(100%-20%)] pt-20 p-4">
 
                 {currentItems && currentItems.length > 0 ? (
-                    currentItems.map((item: any, index: number) =>
-                        <Card
+                    currentItems.map((item: any, index: number) => {
+                        const combinedArray = item.year ? [item.year, ...(item.techContent || [])] : (item.techContent || []);
+
+                        return <Card
                             key={startIndex + index}
                             orgName={item.orgName}
                             tagline={item.tagLine}
-                            tags={item.techContent || []}
+                            tags={combinedArray}
                             logoUrl={item.logoUrl}
                         />
 
-                    )
+                    })
                 ) : (
                     <p>No items to display</p>
                 )}

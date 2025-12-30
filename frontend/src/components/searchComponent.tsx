@@ -2,22 +2,35 @@ import { BottomLeft } from "@/assets/icons/bottomLeftIcon"
 import { BottomRight } from "@/assets/icons/bottomRightIcon"
 import { LeftTopCorner } from "@/assets/icons/leftTopCornerIcon"
 import { TopRight } from "@/assets/icons/topRightIcon"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Fuse from 'fuse.js'
 
 
-export const SearchComp = ({ orgs, setOrgs, allOrgs }: any) => {
+export const SearchComp = ({ setOrgs, allOrgs, activeFilters, input, setInput }: any) => {
 
-    const [input, setInput] = useState('');
+
 
     useEffect(() => {
-        console.log("input is now ", input)
-        console.log(orgs)
+        // console.log("input is now ", input)
+        // console.log(orgs)
 
         const allOrganizations = Object.values(allOrgs)
 
+        const filteredOrgs = allOrganizations.filter((org: any) => {
+            const yearMatch = activeFilters.years.length === 0 ||
+                activeFilters.years.includes(Number(org.year));
+
+            const topicMatch = activeFilters.topics.length === 0 ||
+                org.topicContent?.some((t: any) => activeFilters.topics.includes(t));
+
+            const techMatch = activeFilters.techs.length === 0 ||
+                org.techContent?.some((t: any) => activeFilters.techs.includes(t));
+
+            return yearMatch && topicMatch && techMatch;
+        });
+
         if (!input.trim()) {
-            setOrgs(allOrganizations);
+            setOrgs(filteredOrgs);
             return;
         }
 
@@ -25,15 +38,14 @@ export const SearchComp = ({ orgs, setOrgs, allOrgs }: any) => {
             keys: ['orgName'],
             threshold: 0.4
         }
-        const fuse = new Fuse(allOrganizations, options)
+        const fuse = new Fuse(filteredOrgs, options)
         const results = fuse.search(input)
 
         const plainResults = results.map(result => result.item);
-        // console.log(op)  
         setOrgs(plainResults)
 
 
-    }, [input, allOrgs])
+    }, [input, allOrgs, activeFilters])
 
 
     return (
