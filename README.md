@@ -1,18 +1,17 @@
-# GitIndex 🚀
+# GitIndex 
 
 <div align="center">
 
 ![GitIndex Banner](https://img.shields.io/badge/GitIndex-GSoC%20Organization%20Navigator-orange?style=for-the-badge&logo=google&logoColor=white)
 
-**An intelligent GSoC organization discovery platform powered by multi-layer validation and fuzzy matching algorithms**
+**A high-performance GSoC discovery platform that uses a multi-layer verification pipeline to accurately map organizations to their true GitHub repositories**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-[Features](#-key-features) • [Architecture](#-architecture) • [Installation](#-installation) • [Pipeline](#-data-pipeline) • [Tech Stack](#-tech-stack)
-
+[Features](#-key-features) • [Architecture](#-architecture) • [Installation](#-installation) • [Pipeline](#-data-pipeline) • [Tech Stack](#technology-stack)
 </div>
 
 ---
@@ -36,7 +35,7 @@ GitIndex solves a critical problem for GSoC applicants: **accurately linking 500
 - **Advanced filtering system** with live search using Fuse.js (>0.3 relevance threshold)
 - Filter by **Year** (2016-2024), **Topics** (50+ categories), **Technologies** (100+ tags)
 - **Responsive design** with Tailwind CSS and shadcn/ui components
-- **Client-side state management** for instant filtering (0ms response time)
+- **Client-side state management** for instant filtering (<50ms response time)
 
 ### 🤖 **Intelligent Data Pipeline**
 ```
@@ -169,8 +168,8 @@ npm run dev       # Frontend (port 5173)
 **Backend `.env`**
 ```env
 GITHUB_TOKEN=ghp_your_token_here
-FIRE_CRAWL=fc-your_api_key
-YEAR=year_you_want_to_scrap
+FIRECRAWL_API_KEY=fc-your_api_key
+YEAR=year_you_want_to_scrape
 PORT=3000
 ```
 
@@ -187,7 +186,7 @@ VITE_URL=http://localhost:3000
 
 ```bash
 # 1. Scrape GSoC organizations (stores in KVS)
-npm run ts
+npm run ts # Runs the Crawler (main.ts)
 
 # 2. Merge and validate against cache
 node dist/combine_orgs.js
