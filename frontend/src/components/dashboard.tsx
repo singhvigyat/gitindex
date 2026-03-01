@@ -14,7 +14,7 @@ export const Dashboard = ({ setOrgs, orgs, setYear, allOrgs, allYears, allTopics
             {/* navbar */}
             <nav className=" backdrop-blur-md justify-between w-screen fixed top-0 h-16 z-10 border-b-1 flex items-center px-16 tracking-tighter">
                 <div className="font-satoshi-black">
-                    nameoftheproject
+                    gitindex
                 </div>
                 <div className="w-1/3 hidden sm:block">
                     <SearchComp input={input} setInput={setInput} orgs={orgs} setOrgs={setOrgs} allOrgs={allOrgs} activeFilters={activeFilters} />

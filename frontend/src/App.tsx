@@ -10,7 +10,7 @@ function App() {
   currentYear = currentYear - 1; // as we don't have data of currentYear as of now. 
 
   const [orgs, setOrgs] = useState<object>({});
-  const [year, setYear] = useState<number[]>([]);
+  const [, setYear] = useState<number[]>([]);
 
   interface FilterState {
     years: Number[];
@@ -31,8 +31,7 @@ function App() {
 
 
   const getAllOrgs = async () => {
-    // const allOrgs = await axios.get(`${import.meta.env.VITE_URL}/api/org/getAllOrgs`);
-    const response = await axios.get(`${import.meta.env.VITE_URL}/api/org/getAllOrgs`);
+    const response = await axios.get(`/data.json`);
 
     // console.log("sdfl sdof dsfodf ds", response.data.allYearsArray)
     const Years = (Object.values(response.data.allYearsArray).map(Number))

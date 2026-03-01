@@ -17,6 +17,7 @@
         "playwright": "*"
     },
     "scripts": {
+        "start": "node dist/server.js",
         "dev": "node dist/main.js",
         "server": "npx tsc -b && node dist/server.js",
         "ts": "npx tsc -b && node dist/main.js",
