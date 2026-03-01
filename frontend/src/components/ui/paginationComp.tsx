@@ -53,7 +53,7 @@ export const PaginationComp = ({ orgs }: any) => {
 
     return (
         <div>
-            <div className="flex flex-wrap w-[calc(100%-20%)] pt-20 p-4">
+            <div className="flex flex-wrap w-full pt-20 px-2 pb-2 md:px-4 md:pb-4">
 
                 {currentItems && currentItems.length > 0 ? (
                     currentItems.map((item: any, index: number) => {

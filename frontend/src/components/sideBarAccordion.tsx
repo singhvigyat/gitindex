@@ -85,11 +85,11 @@ export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActi
                 <AccordionTrigger className="font-satoshi-bold">Years</AccordionTrigger>
                 <AccordionContent className="flex flex-col  text-[#414148] ">
 
-                    <div className="flex flex-wrap w-full gap-1.5 justify-center">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 w-full">
 
                         {
                             allYears.map((ele: any, index: any) => (
-                                <label key={index} className="flex w-1/4 items-center gap-2  text-xs cursor-pointer" >
+                                <label key={index} className="flex items-center gap-2 text-xs cursor-pointer" >
                                     <input
                                         checked={activeFilters.years.includes(ele)}
                                         onChange={(e) => { yearHandler(e, ele) }}
@@ -110,10 +110,10 @@ export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActi
                 <AccordionTrigger className="font-satoshi-bold">Technologies</AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance text-[#414148] ">
                     {/* <div className=""> */}
-                    <div className="flex flex-wrap w-full gap-1.5 justify-center h-[30vh] overflow-auto">
+                    <div className="flex flex-wrap w-full gap-1.5 justify-center max-h-[40vh] overflow-auto">
                         {
                             allTechnologies.map((ele: any, index: any) => (
-                                <label key={index} className="flex w-full items-center gap-2  text-xs cursor-pointer" >
+                                <label key={index} className="flex w-full items-center gap-2 text-xs cursor-pointer min-w-0" >
                                     <input
                                         checked={activeFilters.techs.includes(ele)}
                                         onChange={(e) => { technologiesHandler(e, ele) }}
@@ -137,10 +137,10 @@ export function AccordionSideBar({ allYears, allTopics, allTechnologies, setActi
                 <AccordionTrigger className="font-satoshi-bold">Topics</AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance text-[#414148] ">
                     <div className="">
-                        <div className="flex flex-wrap w-full gap-1.5 justify-center h-[30vh] overflow-auto">
+                        <div className="flex flex-wrap w-full gap-1.5 justify-center max-h-[40vh] overflow-auto">
                             {
                                 allTopics.map((ele: any, index: any) => (
-                                    <label key={index} className="flex w-full items-center gap-2  text-xs cursor-pointer" >
+                                    <label key={index} className="flex w-full items-center gap-2 text-xs cursor-pointer min-w-0" >
                                         <input
                                             checked={activeFilters.topics.includes(ele)}
                                             onChange={(e) => { topicHandler(e, ele) }}

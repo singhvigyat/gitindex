@@ -20,7 +20,7 @@ interface cardProps {
 export const Card = ({ orgName, tagline, tags, logoUrl, githubLink, websiteLink, url }: cardProps) => {
     return (
 
-        <div className="flex border border-[#DDDDED] w-1/2  min-h-[145px] max-h-[150px] ">
+        <div className="flex border border-[#DDDDED] w-full md:w-1/2 2xl:w-1/3 min-h-[145px] ">
             {/* Logo of the org */}
             <span className="relative ">
                 <span className="absolute bottom-0 left-0   ">
@@ -30,60 +30,56 @@ export const Card = ({ orgName, tagline, tags, logoUrl, githubLink, websiteLink,
             <div>
                 <LeftTopCorner />
             </div>
-            <div className="w-[10vw] flex bg-amber-100    justify-center items-center m-1 bg-amber-20">
+            <div className="w-16 md:w-20 lg:w-24 shrink-0 flex justify-center items-center m-1">
                 <img
                     src={`${logoUrl}`}
                     alt="example"
                     style={{ maxHeight: '90%', maxWidth: '100%' }}
                 />
             </div>
-            <div className="pl-5 pt-1 w-[65%]  ">
+            <div className="pl-3 md:pl-5 pt-1 min-w-0 flex-1 overflow-hidden">
                 <div className="">
-                    <div className="text-ellipsis whitespace-nowrap overflow-hidden font-satoshi-bold pt-1 pb-1">
+                    <div className="truncate font-satoshi-bold pt-1 pb-1">
                         {orgName}
                     </div>
-                    <div className="h-[25%] w-[80%] text-ellipsis whitespace-nowrap overflow-hidden font-satoshi-regular text-[#414148] pt-1 pb-1 text-sm ">
+                    <div className="w-[80%] truncate font-satoshi-regular text-[#414148] pt-1 pb-1 text-sm ">
                         {tagline}
                     </div>
                     {/* tags */}
                     <div className="flex ">
-                        <span className="flex gap-[5px] w-[90%] py-1 whitespace-nowrap  text-[#414148] items-center">
+                        <span className="flex gap-[5px] w-[90%] py-1 whitespace-nowrap  text-[#414148] items-center overflow-hidden">
                             {
-                                // tags.map((ex le: any) => {
-                                //     return <Tag title={ele} />
-                                // })
-                                // < AutoChipGroup tags={tags}/>
                                 <TagChip tags={tags} />
                             }
                         </span>
                     </div>
-                    <div className="cursor-pointer flex text-[12px] gap-2 font-satoshi-regular text-[#414148] ">
-                        <div className="pt-3 flex items-center gap-1 hover:text-black ">
+                    <div className="cursor-pointer flex flex-wrap text-[12px] gap-x-2 gap-y-1 font-satoshi-regular text-[#414148] ">
+                        <div className="pt-2 md:pt-3 flex items-center gap-1 hover:text-black ">
                             <Github />
                             <a href={githubLink} target="_blank" rel="noopener noreferrer" className="hover:underline">
                                 Github
                             </a>
                         </div>
-                        <div className="pt-3 flex items-center justify-center hover:text-black">
+                        <div className="pt-2 md:pt-3 flex items-center justify-center hover:text-black">
                             <Link />
                             <span className="pl-1">
                                 <a
                                     href={websiteLink}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:underline" 
+                                    className="hover:underline"
                                 >
                                     Website
                                 </a>
                             </span>
                         </div>
-                        <div className="pt-3 flex items-center justify-center hover:text-black">
+                        <div className="pt-2 md:pt-3 flex items-center justify-center hover:text-black">
                             <Report />
                             <span className="pl-1">
                                 Report
                             </span>
                         </div>
-                        <div className="pt-3 flex items-center justify-center hover:text-black">
+                        <div className="pt-2 md:pt-3 flex items-center justify-center hover:text-black">
                             <User />
                             <span className="pl-1">
                                 Contact
@@ -105,11 +101,6 @@ export const Card = ({ orgName, tagline, tags, logoUrl, githubLink, websiteLink,
                 </a>
 
             </span>
-            {/* <span className="relative">
-                    <span className="absolute bottom-0 left-0  bg-blue-200 ">
-                        <TopRight />
-                    </span>
-                </span> */}
 
             <span className="relative ">
                 <span className="absolute bottom-0 right-0  ">
